@@ -8,19 +8,47 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: #171010;
+  --color-accent: #f0f0f0;
+  --color-accent-300: #8B8787;
+
+
+  --font-noah: var(--font-noah);
+  --font-ivyPresto: var(--font-ivy-presto);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--background);
+}
+
+.header-content{
+  height: calc(100vh - 64px);
+}
+
+.category-card::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.overlay::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.swimsuit-category img{
+  object-position: 0% 70%;
 }

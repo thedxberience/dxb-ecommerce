@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const IvyPresto = localFont({
+  src: "../../public/font/Ivy Presto/Ivy Presto 3.otf",
+  display: "swap",
+  variable: "--font-ivy-presto",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const noah = localFont({
+  src: "../../public/font/Noah/Noah Regular.otf",
+  display: "swap",
+  variable: "--font-noah",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${IvyPresto.variable} ${noah.variable} font-noah antialiased`}
       >
         {children}
       </body>
