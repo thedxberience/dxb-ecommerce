@@ -4,7 +4,6 @@ import ProductContainer from "./(home)/product_sections/ProductContainer";
 import Trends from "./(home)/trends/Trends";
 import CategoryContainer from "./(home)/categories/CategoryContainer";
 import { getCategoryContainerData } from "@/utils/util";
-import Footer from "@/components/shared/Footer";
 
 export default function Home() {
   const swimsuitCategoryData = getCategoryContainerData("swimsuits");
@@ -37,7 +36,6 @@ export default function Home() {
           className="h-[535px] mb-10 overlay"
         />
       )}
-      <Footer />
     </main>
   );
 }

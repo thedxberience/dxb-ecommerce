@@ -5,7 +5,7 @@ import { HiMenuAlt2 } from "react-icons/hi";
 
 const Navbar = () => {
   return (
-    <nav className="navbar relative z-50 flex justify-between items-center p-4 mx-auto container">
+    <nav className="navbar fixed top-0 w-full z-50 flex justify-between items-center p-4">
       <div className="hamburger-menu">
         <HiMenuAlt2 className="w-8 h-8" />
       </div>

@@ -1,0 +1,6 @@
+The products Details page
+
+1. Needs to make use of the same layout as all the other pages (using header and footer)
+2. There is a slide in animation for the product page (considering it is a new url I am not sure if we would do this animation)
+3. There is no sliding animation used for the display images
+4. We will not be introducting the Payment Methods section

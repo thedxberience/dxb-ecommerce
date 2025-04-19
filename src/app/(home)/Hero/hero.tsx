@@ -1,12 +1,10 @@
 import CustomButton from "@/components/shared/CustomButton";
-import Navbar from "@/components/shared/Navbar";
 import Image from "next/image";
 import React from "react";
 
 const Hero = () => {
   return (
     <header className="relative mb-10">
-      <Navbar />
       <div className="hero absolute max-w-screen w-full h-screen max-h-screen top-0 left-0">
         <Image
           src={"/images/hero-img.jpeg"}
