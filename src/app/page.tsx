@@ -5,6 +5,7 @@ import Trends from "./(home)/trends/Trends";
 import CategoryContainer from "./(home)/categories/CategoryContainer";
 import { getCategoryContainerData } from "@/utils/util";
 import Footer from "@/components/shared/Footer";
+import Brands from "./(home)/brands/Brands";
 
 export default function Home() {
   const swimsuitCategoryData = getCategoryContainerData("swimsuits");
@@ -18,6 +19,7 @@ export default function Home() {
       <ProductContainer sectionHeader="NEW ARRIVALS" />
       <ProductContainer sectionHeader="WATCHES SELECTION" />
       <Trends />
+      <Brands />
       <ProductContainer sectionHeader="GIFT FOR HER" />
       {swimsuitCategoryData && (
         <CategoryContainer
