@@ -14,7 +14,7 @@ const MensTrends = () => {
           sizes="(max-width: 1024px) 100vw, 50vw"
         />
       </div>
-      <div className="cta-container bg-accent flex flex-col justify-center items-center text-primary gap-8 h-full">
+      <div className="cta-container bg-accent flex flex-col justify-center items-center text-primary gap-8 h-full py-10">
         <h3 className="font-ivyPresto text-4xl lg:text-7xl text-center">
           Men's
         </h3>

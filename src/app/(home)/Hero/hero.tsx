@@ -16,8 +16,10 @@ const Hero = () => {
       </div>
       <div className="header-content relative z-10 w-full h-full flex flex-col justify-end items-center gap-6 pb-44">
         <div className="text-center font-bold flex justify-center flex-col items-center gap-6">
-          <h1 className="text-7xl font-ivyPresto">Start the Year in Style</h1>
-          <p className="text-xl font-bold">
+          <h1 className="text-2xl lg:text-7xl font-ivyPresto">
+            Start the Year in Style
+          </h1>
+          <p className="lg:text-xl font-bold">
             2025’s Finest: A Handpicked Collection of Timeless Luxury
           </p>
         </div>
