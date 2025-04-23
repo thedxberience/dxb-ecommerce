@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Heart from "./Heart";
+import { cn } from "@/utils/util";
 
 type ProductCardProps = {
   src: string;
@@ -7,6 +8,7 @@ type ProductCardProps = {
   brand: string;
   price: string;
   productDescription: string;
+  className?: string;
 };
 
 const ProductCard = ({
@@ -14,11 +16,17 @@ const ProductCard = ({
   alt,
   brand,
   price,
-  productDescription
+  productDescription,
+  className,
 }: ProductCardProps) => {
   return (
-    <div className="group relative flex flex-col justify-center items-center gap-3 w-full cursor-pointer">
-      <div className="product-img relative w-full h-[446px] flex justify-end items-end overflow-hidden">
+    <div
+      className={cn(
+        "group relative flex flex-col justify-center items-center gap-3 w-full cursor-pointer min-w-56",
+        className
+      )}
+    >
+      <div className="product-img relative w-full h-60 lg:h-[446px] flex justify-end items-end overflow-hidden">
         <Image
           src={src}
           alt={alt}

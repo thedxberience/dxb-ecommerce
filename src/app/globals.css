@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #171010;
+  --accent: #f0f0f0;
+  --accent-100: #B2AFAF;
+  --accent-300: #8b8787;
+  --font-noah: "Noah", sans-serif;
+  --font-ivy-presto: "Ivy Presto", sans-serif;
 }
 
 @theme inline {
@@ -10,6 +16,7 @@
   --color-foreground: var(--foreground);
   --color-primary: #171010;
   --color-accent: #f0f0f0;
+  --color-accent-100: #B2AFAF;
   --color-accent-300: #8b8787;
 
   --font-noah: var(--font-noah);
@@ -50,4 +57,25 @@ body {
 
 .swimsuit-category img {
   object-position: 0% 70%;
+}
+
+.navbar {
+  z-index: 1000;
+}
+
+.navbar-scroll{
+  z-index: 1000;
+  position: fixed;
+  top: 0px;
+  left: 0;
+  right: 0;
+  background-color: var(--color-foreground);
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.section-overflow::-webkit-scrollbar, .brand-grid::-webkit-scrollbar, .category::-webkit-scrollbar {
+  width: 0px;
+  display: none;
 }

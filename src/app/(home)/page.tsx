@@ -1,9 +1,10 @@
-import Hero from "./(home)/Hero/hero";
-import Categories from "./(home)/categories/Categories";
-import ProductContainer from "./(home)/product_sections/ProductContainer";
-import Trends from "./(home)/trends/Trends";
-import CategoryContainer from "./(home)/categories/CategoryContainer";
+import Hero from "./Hero/hero";
+import Categories from "./categories/Categories";
+import ProductContainer from "./product_sections/ProductContainer";
+import Trends from "./trends/Trends";
+import CategoryContainer from "./categories/CategoryContainer";
 import { getCategoryContainerData } from "@/utils/util";
+import Brands from "./brands/Brands";
 
 export default function Home() {
   const swimsuitCategoryData = getCategoryContainerData("swimsuits");
@@ -17,6 +18,7 @@ export default function Home() {
       <ProductContainer sectionHeader="NEW ARRIVALS" />
       <ProductContainer sectionHeader="WATCHES SELECTION" />
       <Trends />
+      <Brands />
       <ProductContainer sectionHeader="GIFT FOR HER" />
       {swimsuitCategoryData && (
         <CategoryContainer
