@@ -16,7 +16,7 @@ const page = () => {
           </button>
           <p>4545 Products</p>
         </div>
-        <div className="product-grid grid grid-cols-2 lg:grid-cols-4 gap-8 justify-center items-center w-full mt-8 max-w-11/12">
+        <div className="product-grid grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 justify-center items-center w-full mt-8 max-w-11/12">
           {craftedProducts.map((product, index) => (
             <ProductCard
               alt={product.alt}
