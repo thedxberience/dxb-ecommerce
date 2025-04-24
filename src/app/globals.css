@@ -73,6 +73,20 @@ body {
   transition: background-color 0.3s ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
+  color: var(--accent) !important;
+}
+
+.navbar-scroll-accent{
+  z-index: 1000;
+  position: fixed;
+  top: 0px;
+  left: 0;
+  right: 0;
+  background-color: var(--color-accent);
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  color: var(--accent) !important;
 }
 
 .section-overflow::-webkit-scrollbar, .brand-grid::-webkit-scrollbar, .category::-webkit-scrollbar {
