@@ -18,6 +18,7 @@ const ProductContainer = ({ sectionHeader }: ProductContainerProps) => {
         <div className="flex section-overflow lg:grid lg:grid-cols-4 lg:justify-center items-center gap-8 w-full mt-8 max-w-11/12 overflow-auto lg:overflow-hidden">
           {craftedProducts.map((product, index) => (
             <ProductCard
+              slug={product.slug}
               alt={product.alt}
               brand={product.brand}
               price={product.price}
