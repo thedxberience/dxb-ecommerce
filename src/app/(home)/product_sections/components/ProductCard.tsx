@@ -3,6 +3,7 @@ import Heart from "./Heart";
 import { cn } from "@/utils/util";
 
 type ProductCardProps = {
+  slug: string;
   src: string;
   alt: string;
   brand: string;
@@ -17,7 +18,7 @@ const ProductCard = ({
   brand,
   price,
   productDescription,
-  className,
+  className
 }: ProductCardProps) => {
   return (
     <div
