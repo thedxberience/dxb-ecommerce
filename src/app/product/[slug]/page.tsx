@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { stubProducts } from "@/utils/stub";
 import { ProductDetails } from "../components/ProductDetails";
-import ProductContainer from "@/app/(home)/product_sections/ProductContainer";
 import { GenericCard } from "@/components/shared/GenericCard";
 
 export default function Page() {
@@ -11,20 +10,20 @@ export default function Page() {
       category: "Women",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/women.jpeg",
-      alt: "A woman wearing a dress"
+      alt: "A woman wearing a dress",
     },
     {
       category: "Swimsuits",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/swimsuit.jpeg",
-      alt: "A woman wearing a swimsuit reading a magazine"
+      alt: "A woman wearing a swimsuit reading a magazine",
     },
     {
       category: "Watches",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/watches.jpeg",
-      alt: "A woman wearing a swimsuit reading a magazine"
-    }
+      alt: "A woman wearing a swimsuit reading a magazine",
+    },
   ];
   return (
     <div className="flex flex-col">
@@ -40,9 +39,6 @@ export default function Page() {
         <div className="flex px-4 pt-8 lg:mt-20 lg:w-1/2 lg:px-24 box-border">
           <ProductDetails product={product} />
         </div>
-      </div>
-      <div>
-        <ProductContainer sectionHeader="YOU MAY ALSO LIKE" />
       </div>
       <div className="flex overflow-auto w-full">
         {data.map((entry, index) => (
