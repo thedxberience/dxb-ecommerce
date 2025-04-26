@@ -2,15 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { HiMenuAlt2 } from "react-icons/hi";
 import SearchIcon from "../icons/SearchIcon";
-import ProfileIcon from "../icons/ProfileIcon";
-import BagIcon from "../icons/BagIcon";
 import { usePathname } from "next/navigation";
+import NavMenu from "./navbar/menu";
+import SearchBar from "./navbar/SearchBar";
 
 const Navbar = () => {
   const pathname = usePathname();
   const [navbarStyle, setNavbarStyle] = React.useState("");
+  const [isSearchBarOpen, setIsSearchBarOpen] = React.useState(false);
 
   const navBarVariants = {
     home: "text-accent",
@@ -43,13 +43,11 @@ const Navbar = () => {
 
   return (
     <div
-      className={`flex navbar justify-center items-center fixed top-0 w-full h-16 ${navbarStyle}`}
+      className={`flex flex-col navbar justify-center items-center fixed top-0 w-full h-16 ${navbarStyle}`}
     >
       <nav className="container w-full  flex justify-between items-center p-4">
         <div className="hamburger-menu">
-          <HiMenuAlt2
-            className={`w-8 h-8 ${navBarVariants[isHomePage]} cursor-pointer`}
-          />
+          <NavMenu variant={navBarVariants[isHomePage]} />
         </div>
 
         <div className="logo">
@@ -73,17 +71,24 @@ const Navbar = () => {
         </div>
 
         <div className="nav-btns flex justify-center items-center gap-4">
-          <div className={`search ${navBarVariants[isHomePage]}`}>
+          <div
+            className={`search ${navBarVariants[isHomePage]}`}
+            onClick={() => setIsSearchBarOpen(true)}
+          >
             <SearchIcon />
           </div>
-          <div className={`profile ${navBarVariants[isHomePage]}`}>
+          {/* <div className={`profile ${navBarVariants[isHomePage]}`}>
             <ProfileIcon />
           </div>
           <div className={`bag ${navBarVariants[isHomePage]}`}>
             <BagIcon />
-          </div>
+          </div> */}
         </div>
       </nav>
+      <SearchBar
+        isSearchBarOpen={isSearchBarOpen}
+        setIsSearchBarOpen={setIsSearchBarOpen}
+      />
     </div>
   );
 };
