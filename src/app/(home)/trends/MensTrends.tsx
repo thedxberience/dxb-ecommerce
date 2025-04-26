@@ -16,7 +16,7 @@ const MensTrends = () => {
       </div>
       <div className="cta-container bg-accent flex flex-col justify-center items-center text-primary gap-8 h-full py-10">
         <h3 className="font-ivyPresto text-4xl lg:text-7xl text-center">
-          Men's
+          Men&apos;s
         </h3>
         <p className="text-xl font-bold text-center font-noah text-accent-300">
           2025’s Finest: A Handpicked Collection of Timeless Luxury
