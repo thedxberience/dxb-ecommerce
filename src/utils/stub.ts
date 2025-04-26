@@ -94,6 +94,61 @@ export const stubProducts: Product[] = [
         price: "19.99",
         asset: { src: "/images/products/product-3.png", alt: "" },
         variants: []
+      },
+      {
+        id: "prod-003",
+        slug: "volume-mascara",
+        name: "Volume Mascara",
+        brand: "LushLook",
+        category: [stubCategories[2]],
+        description: "Intense volume mascara for bold, beautiful lashes.",
+        price: "14.99",
+        asset: { src: "/images/products/product-5.png", alt: "" },
+        variants: []
+      },
+      {
+        id: "prod-003",
+        slug: "volume-mascara",
+        name: "Volume Mascara",
+        brand: "LushLook",
+        category: [stubCategories[2]],
+        description: "Intense volume mascara for bold, beautiful lashes.",
+        price: "14.99",
+        asset: { src: "/images/products/product-6.png", alt: "" },
+        variants: []
+      },
+      {
+        id: "prod-003",
+        slug: "volume-mascara",
+        name: "Volume Mascara",
+        brand: "LushLook",
+        category: [stubCategories[2]],
+        description: "Intense volume mascara for bold, beautiful lashes.",
+        price: "14.99",
+        asset: { src: "/images/products/product-4.png", alt: "" },
+        variants: []
+      },
+      {
+        id: "prod-003",
+        slug: "volume-mascara",
+        name: "Volume Mascara",
+        brand: "LushLook",
+        category: [stubCategories[2]],
+        description: "Intense volume mascara for bold, beautiful lashes.",
+        price: "14.99",
+        asset: { src: "/images/products/product-6.png", alt: "" },
+        variants: []
+      },
+      {
+        id: "prod-003",
+        slug: "volume-mascara",
+        name: "Volume Mascara",
+        brand: "LushLook",
+        category: [stubCategories[2]],
+        description: "Intense volume mascara for bold, beautiful lashes.",
+        price: "14.99",
+        asset: { src: "/images/products/product-4.png", alt: "" },
+        variants: []
       }
     ]
   },

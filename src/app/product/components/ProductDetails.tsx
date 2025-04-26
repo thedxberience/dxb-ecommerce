@@ -30,7 +30,7 @@ export function ProductDetails({
       </div>
 
       {/* Variants */}
-      <div className="mt-8 flex flex-wrap gap-4 w-full">
+      <div className="mt-8 flex section-overflow overflow-auto lg:flex-wrap gap-4 w-full">
         {productVariants.map((variant) => (
           <MiniProductCard
             key={variant.slug}

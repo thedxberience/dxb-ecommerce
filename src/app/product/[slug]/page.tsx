@@ -14,7 +14,7 @@ export default function Page() {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col w-full lg:h-auto lg:flex-row">
-        <div className="relative flex h-[340px] w-full lg:h-[100vh] lg:w-1/2">
+        <div className="relative flex h-[340px] w-full lg:h-[100vh] lg:w-[56%]">
           <Image
             src={showcaseImage}
             alt="Product Image"
@@ -22,7 +22,7 @@ export default function Page() {
             className="object-cover"
           />
         </div>
-        <div className="flex px-4 pt-8 lg:mt-20 lg:w-1/2 lg:px-24 box-border">
+        <div className="flex px-4 pt-8 lg:mt-20 lg:w-[44%] lg:px-24 box-border">
           <ProductDetails
             product={product}
             setShowcaseImage={setShowcaseImage}

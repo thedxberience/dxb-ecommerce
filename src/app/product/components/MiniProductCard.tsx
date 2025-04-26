@@ -6,7 +6,10 @@ type MiniProductCardProps = {
 };
 export function MiniProductCard(props: MiniProductCardProps) {
   return (
-    <div className="w-[110px] bg-[#efefef]" onClick={props.onClick}>
+    <div
+      className="w-[110px] bg-[#efefef] flex-shrink-0"
+      onClick={props.onClick}
+    >
       <Image
         src={props.src}
         alt="Product Image"
