@@ -1,11 +1,16 @@
+import Link from "next/link";
 import ProductCard from "./components/ProductCard";
 import { craftedProducts } from "./data";
 
 type ProductContainerProps = {
   sectionHeader: string;
+  categorySlug?: string;
 };
 
-const ProductContainer = ({ sectionHeader }: ProductContainerProps) => {
+const ProductContainer = ({
+  sectionHeader,
+  categorySlug = "women",
+}: ProductContainerProps) => {
   return (
     <section className="flex flex-col gap-8 justify-center items-center w-full py-10">
       <div className="container flex flex-col gap-8 justify-center items-center">
@@ -13,7 +18,9 @@ const ProductContainer = ({ sectionHeader }: ProductContainerProps) => {
           <h2 className="font-ivyPresto text-xl lg:text-4xl">
             {sectionHeader}
           </h2>
-          <p className="uppercase font-bold text-sm underline">see more</p>
+          <Link href={`/category/${categorySlug}`}>
+            <p className="uppercase font-bold text-sm underline">see more</p>
+          </Link>
         </div>
         <div className="flex section-overflow lg:grid lg:grid-cols-4 lg:justify-center items-center gap-8 w-full mt-8 max-w-11/12 overflow-auto lg:overflow-hidden">
           {craftedProducts.map((product, index) => (
