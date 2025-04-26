@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { stubProducts } from "@/utils/stub";
 import { ProductDetails } from "../components/ProductDetails";
+import ProductContainer from "@/app/(home)/product_sections/ProductContainer";
 import { GenericCard } from "@/components/shared/GenericCard";
 
 export default function Page() {
@@ -39,6 +40,9 @@ export default function Page() {
         <div className="flex px-4 pt-8 lg:mt-20 lg:w-1/2 lg:px-24 box-border">
           <ProductDetails product={product} />
         </div>
+      </div>
+      <div>
+        <ProductContainer sectionHeader="YOU MAY ALSO LIKE" />
       </div>
       <div className="flex overflow-auto w-full">
         {data.map((entry, index) => (
