@@ -2,6 +2,7 @@ import Image from "next/image";
 import Heart from "./Heart";
 import { cn } from "@/utils/util";
 import Link from "next/link";
+import { TruncateText } from "@/components/shared/TruncateText";
 
 type ProductCardProps = {
   slug: string;
@@ -47,7 +48,7 @@ const ProductCard = ({
             <p>{price}</p>
           </div>
           <div className="text-lg group-hover:underline">
-            {productDescription}
+            <TruncateText height={100} text={productDescription} />
           </div>
           <div className="flex justify-start items-center gap-2 relative">
             <Image

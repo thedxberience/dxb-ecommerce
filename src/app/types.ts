@@ -14,7 +14,10 @@ export type Product = {
   category: Category[];
   description: string;
   price: string;
-  asset: string;
+  asset: {
+    src: string;
+    alt: string;
+  };
   parentVariant?: string;
   variants: Product[];
 };

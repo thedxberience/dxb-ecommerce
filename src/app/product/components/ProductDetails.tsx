@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import Image from "next/image";
 import { Product } from "@/app/types";
@@ -7,9 +8,13 @@ import { MiniProductCard } from "./MiniProductCard";
 
 type ProductDetailProps = {
   product: Product;
+  setShowcaseImage: any;
 };
 
-export function ProductDetails({ product }: ProductDetailProps) {
+export function ProductDetails({
+  product,
+  setShowcaseImage
+}: ProductDetailProps) {
   const productVariants = product.variants.length
     ? product.variants
     : [product];
@@ -25,9 +30,13 @@ export function ProductDetails({ product }: ProductDetailProps) {
       </div>
 
       {/* Variants */}
-      <div className="mt-8 flex flex-wrap gap-4 justify-between w-full">
+      <div className="mt-8 flex flex-wrap gap-4 w-full">
         {productVariants.map((variant) => (
-          <MiniProductCard key={variant.slug} src={variant.asset} />
+          <MiniProductCard
+            key={variant.slug}
+            src={variant.asset.src}
+            onClick={() => setShowcaseImage(variant.asset.src)}
+          />
         ))}
       </div>
 
