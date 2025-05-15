@@ -1,15 +1,17 @@
 import Image from "next/image";
 import Heart from "./Heart";
-import { cn } from "@/utils/util";
+import { cn, currencyFormatter } from "@/utils/util";
 import Link from "next/link";
+import { PortableText } from "@portabletext/react";
 
 type ProductCardProps = {
   slug: string;
   src: string;
   alt: string;
   brand: string;
-  price: string;
-  productDescription: string;
+  price: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  summary: any;
   className?: string;
 };
 
@@ -19,8 +21,8 @@ const ProductCard = ({
   alt,
   brand,
   price,
-  productDescription,
-  className
+  summary,
+  className,
 }: ProductCardProps) => {
   return (
     <Link href={`/product/${slug}`}>
@@ -41,13 +43,13 @@ const ProductCard = ({
             <Heart />
           </div>
         </div>
-        <div className="flex flex-col justify-center items-start gap-1 text-black">
+        <div className="flex flex-col justify-center items-start gap-1 text-black w-full">
           <div className="brand-price w-full flex justify-between items-center">
             <p>{brand}</p>
-            <p>{price}</p>
+            <p>{currencyFormatter(price, "AED")}</p>
           </div>
-          <div className="text-lg group-hover:underline">
-            {productDescription}
+          <div className="text-lg group-hover:underline h-[156px]">
+            <PortableText value={summary} />
           </div>
           <div className="flex justify-start items-center gap-2 relative">
             <Image

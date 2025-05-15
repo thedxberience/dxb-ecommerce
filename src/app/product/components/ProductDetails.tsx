@@ -1,18 +1,28 @@
 import React from "react";
 import Image from "next/image";
-import { Product } from "@/app/types";
 import { Button } from "./Button";
 import { ContextMenu } from "./ContextMenu";
 import { MiniProductCard } from "./MiniProductCard";
+import { sanityProduct } from "@/utils/types";
+import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
+import { currencyFormatter } from "@/utils/util";
 
 type ProductDetailProps = {
-  product: Product;
+  product: sanityProduct;
 };
 
-export function ProductDetails({ product }: ProductDetailProps) {
-  const productVariants = product.variants.length
-    ? product.variants
-    : [product];
+export async function ProductDetails({ product }: ProductDetailProps) {
+  const { data: productVariants, error: productsVariantsErr } =
+    await getAllSanityProductsByFilters({
+      parent: product.id,
+    });
+
+  if (productsVariantsErr) {
+    console.error(
+      "Error fetching product variants from Sanity:",
+      productsVariantsErr
+    );
+  }
 
   return (
     <div className="w-full text-black h-auto">
@@ -21,14 +31,18 @@ export function ProductDetails({ product }: ProductDetailProps) {
       <div className="mb-2 text-sm">{product.brand}</div>
       <div className="flex w-full text-xl justify-between">
         <span>{product.name}</span>
-        <span>{product.price}</span>
+        <span>{currencyFormatter(product.price, "AED")}</span>
       </div>
 
       {/* Variants */}
       <div className="mt-8 flex flex-wrap gap-4 justify-between w-full">
-        {productVariants.map((variant) => (
-          <MiniProductCard key={variant.slug} src={variant.asset} />
-        ))}
+        {productVariants &&
+          productVariants.map((variant) => (
+            <MiniProductCard
+              key={variant.slug}
+              src={variant.thumbnail.imgSrc}
+            />
+          ))}
       </div>
 
       {/* Action Buttons */}
@@ -65,7 +79,7 @@ export function ProductDetails({ product }: ProductDetailProps) {
           {
             text: "Description",
             data: <div>{product.description}</div>,
-            id: "description"
+            id: "description",
           },
           {
             text: "Delivery",
@@ -76,7 +90,7 @@ export function ProductDetails({ product }: ProductDetailProps) {
                 are any delays, you will be contacted by our team.
               </div>
             ),
-            id: "delivery"
+            id: "delivery",
           },
           {
             text: "Authenticity",
@@ -88,8 +102,8 @@ export function ProductDetails({ product }: ProductDetailProps) {
                 retailers, and verified suppliers.
               </div>
             ),
-            id: "authenticity"
-          }
+            id: "authenticity",
+          },
         ]}
       />
     </div>

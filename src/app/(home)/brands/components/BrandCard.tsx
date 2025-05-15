@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type BrandCardProps = {
   name: string;
@@ -8,7 +9,10 @@ type BrandCardProps = {
 
 const BrandCard = ({ name, src, alt }: BrandCardProps) => {
   return (
-    <div className="w-full min-w-[220px] group relative rounded-3xl flex justify-center items-center overflow-hidden h-24 lg:h-36 overlay cursor-pointer">
+    <Link
+      href={`/collection/${name}`}
+      className="w-full min-w-[220px] group relative rounded-3xl flex justify-center items-center overflow-hidden h-24 lg:h-36 overlay cursor-pointer"
+    >
       <Image
         alt={alt}
         src={src}
@@ -20,7 +24,7 @@ const BrandCard = ({ name, src, alt }: BrandCardProps) => {
           {name}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 
