@@ -48,7 +48,7 @@ const ProductCard = ({
             <p>{brand}</p>
             <p>{currencyFormatter(price, "AED")}</p>
           </div>
-          <div className="text-lg group-hover:underline h-[156px]">
+          <div className="text-lg group-hover:underline min-h-[156px]">
             <PortableText value={summary} />
           </div>
           <div className="flex justify-start items-center gap-2 relative">

@@ -6,6 +6,7 @@ import { MiniProductCard } from "./MiniProductCard";
 import { sanityProduct } from "@/utils/types";
 import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
 import { currencyFormatter } from "@/utils/util";
+import { PortableText } from "@portabletext/react";
 
 type ProductDetailProps = {
   product: sanityProduct;
@@ -78,7 +79,8 @@ export async function ProductDetails({ product }: ProductDetailProps) {
         menuList={[
           {
             text: "Description",
-            data: <div>{product.description}</div>,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            data: <PortableText value={product.description as any} />,
             id: "description",
           },
           {
