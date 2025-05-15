@@ -59,7 +59,7 @@ const ProductCard = ({
               height={24}
               className="rounded-full"
             />
-            <p className="text-xs font-noah">+8</p>
+            {/* <p className="text-xs font-noah">+8</p> */}
           </div>
         </div>
       </div>
