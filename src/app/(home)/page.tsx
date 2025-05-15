@@ -15,11 +15,17 @@ export default function Home() {
       <Hero />
       <Categories />
       <ProductContainer sectionHeader="Curated For You" />
-      <ProductContainer sectionHeader="NEW ARRIVALS" />
-      <ProductContainer sectionHeader="WATCHES SELECTION" />
+      <ProductContainer
+        sectionHeader="NEW ARRIVALS"
+        categorySlug="dresses-women"
+      />
+      {/* <ProductContainer sectionHeader="Shoes" /> */}
       <Trends />
       <Brands />
-      <ProductContainer sectionHeader="GIFT FOR HER" />
+      <ProductContainer
+        sectionHeader="Jumpsuits"
+        categorySlug="jumpsuits-body-women"
+      />
       {swimsuitCategoryData && (
         <CategoryContainer
           alt={swimsuitCategoryData.alt}

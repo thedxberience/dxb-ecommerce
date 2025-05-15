@@ -234,3 +234,6 @@ body {
   }
 }
 
+.menu-accordion svg{
+  display: none;
+}

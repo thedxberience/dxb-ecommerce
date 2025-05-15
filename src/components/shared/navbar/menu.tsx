@@ -1,3 +1,4 @@
+"use client";
 import {
   Drawer,
   DrawerClose,
@@ -8,15 +9,87 @@ import {
 } from "@/components/ui/drawer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { HiMenuAlt2 } from "react-icons/hi";
-import { mainCategories, subCategories } from "./menu-data";
-import CategoryNavMenu from "./CategoryNavMenu";
+import { mainCategories } from "./menu-data";
 import WhatsappLogo from "@/components/icons/WhatsappLogo";
+import { getAllSanityCategories } from "@/server/sanity/categories/category";
+import { useEffect, useState } from "react";
+import { sanityCategory } from "@/utils/types";
+import SubCategoryAccordion from "./SubCategoryAccordion";
 
 type NavbarProps = {
   variant: string;
 };
 
 const NavMenu = ({ variant }: NavbarProps) => {
+  const [categoryData, setCategoryData] =
+    useState<Record<string, sanityCategory[]>>();
+
+  const filterCategoriesByTargetAudience = (
+    targetAudience: string,
+    category: sanityCategory[]
+  ) => {
+    console.log("Cat not filtered", category);
+
+    const filteredCategories: sanityCategory[] = [];
+
+    for (let i = 0; i <= category.length - 1; i++) {
+      const cat = { ...category[i] };
+
+      // filter subcategories by target audience
+      const filteredSubcategories = cat.subCategories.filter(
+        (c) => c.targetAudience === targetAudience
+      );
+
+      if (filteredSubcategories.length > 0) {
+        cat.subCategories = filteredSubcategories;
+        filteredCategories.push(cat);
+      }
+    }
+
+    // console.log("Filtered Categories: ", filteredCategories);
+
+    return filteredCategories;
+  };
+
+  const getTargetAudienceCategory = async () => {
+    const {
+      data: targetAudienceCategories,
+      error: fetchTargetAudienceCategoryErr,
+    } = await getAllSanityCategories();
+
+    if (fetchTargetAudienceCategoryErr) {
+      console.error(
+        "Error fetching target audience products from Sanity:",
+        fetchTargetAudienceCategoryErr
+      );
+      return [];
+    }
+
+    console.log("TA cAT: ", targetAudienceCategories);
+
+    const menCategories = filterCategoriesByTargetAudience(
+      "men",
+      targetAudienceCategories
+    );
+    const womenCategories = filterCategoriesByTargetAudience(
+      "women",
+      targetAudienceCategories
+    );
+
+    // console.log(targetAudienceCategories, menCategories, womenCategories);
+
+    const categoryPayload = {
+      men: menCategories,
+      women: womenCategories,
+    };
+
+    setCategoryData(categoryPayload);
+  };
+
+  useEffect(() => {
+    getTargetAudienceCategory();
+  }, []);
+
   return (
     <Drawer direction="left">
       <DrawerTrigger className="flex items-center justify-center w-full h-full">
@@ -24,10 +97,10 @@ const NavMenu = ({ variant }: NavbarProps) => {
       </DrawerTrigger>
       <DrawerTitle className="invisible absolute">Menu</DrawerTitle>
       <DrawerContent className="bg-accent">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 h-full">
           <Tabs
             defaultValue={mainCategories[0]}
-            className="w-full flex justify-center items-center"
+            className="w-full flex justify-center items-center h-full"
           >
             <TabsList className="flex justify-center items-center gap-4 w-full bg-white pb-0">
               {mainCategories.map((category) => (
@@ -40,27 +113,27 @@ const NavMenu = ({ variant }: NavbarProps) => {
                 </TabsTrigger>
               ))}
             </TabsList>
-            {mainCategories.map((category) => {
+            {mainCategories.map(async (category) => {
+              // Fetch target audience categories
               return (
                 <TabsContent
                   key={category}
                   value={category}
-                  className="w-full overflow-auto max-h-[calc(100svh-250px)]"
+                  className="w-full overflow-auto h-full max-h-[calc(100svh-250px)]"
                 >
                   <div className="flex flex-col gap-4 w-full">
-                    {subCategories[category as keyof typeof subCategories].map(
-                      (subCategory, index) => {
+                    {categoryData &&
+                      categoryData[category].map((subCategory, index) => {
                         return (
-                          <CategoryNavMenu
+                          <SubCategoryAccordion
                             key={index}
-                            collection={subCategory.collection}
-                            imgAlt={subCategory.imgAlt}
-                            imgSrc={subCategory.imgSrc}
-                            slug={subCategory.slug}
+                            name={subCategory.name}
+                            alt={"Women category"}
+                            src={"/images/categories/women.jpeg"}
+                            subCategories={subCategory.subCategories}
                           />
                         );
-                      }
-                    )}
+                      })}
                   </div>
                 </TabsContent>
               );
