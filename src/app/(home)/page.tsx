@@ -1,12 +1,16 @@
+"use client";
 import Hero from "./Hero/hero";
 import Categories from "./categories/Categories";
-import ProductContainer from "./product_sections/ProductContainer";
-import Trends from "./trends/Trends";
+// import ProductContainer from "./product_sections/ProductContainer";
+// import Trends from "./trends/Trends";
 import CategoryContainer from "./categories/CategoryContainer";
 import { getCategoryContainerData } from "@/utils/util";
-import Brands from "./brands/Brands";
+// import Brands from "./brands/Brands";
+import useRouteBouncer from "@/lib/hooks";
 
 export default function Home() {
+  useRouteBouncer();
+
   const swimsuitCategoryData = getCategoryContainerData("swimsuits");
   const watchesCategoryData = getCategoryContainerData("watches");
 
@@ -14,18 +18,18 @@ export default function Home() {
     <main className="">
       <Hero />
       <Categories />
-      <ProductContainer sectionHeader="Curated For You" />
-      <ProductContainer
+      {/* <ProductContainer sectionHeader="Curated For You" /> */}
+      {/* <ProductContainer
         sectionHeader="NEW ARRIVALS"
         categorySlug="dresses-women"
-      />
+      /> */}
       {/* <ProductContainer sectionHeader="Shoes" /> */}
-      <Trends />
-      <Brands />
-      <ProductContainer
+      {/* <Trends /> */}
+      {/* <Brands /> */}
+      {/* <ProductContainer
         sectionHeader="Jumpsuits"
         categorySlug="jumpsuits-body-women"
-      />
+      /> */}
       {swimsuitCategoryData && (
         <CategoryContainer
           alt={swimsuitCategoryData.alt}

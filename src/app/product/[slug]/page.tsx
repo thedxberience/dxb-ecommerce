@@ -1,53 +1,58 @@
-import Image from "next/image";
-import { ProductDetails } from "../components/ProductDetails";
-import ProductContainer from "@/app/(home)/product_sections/ProductContainer";
-import { GenericCard } from "@/components/shared/GenericCard";
-import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
-import { notFound } from "next/navigation";
+"use client";
+// import Image from "next/image";
+// import { ProductDetails } from "../components/ProductDetails";
+// import ProductContainer from "@/app/(home)/product_sections/ProductContainer";
+// import { GenericCard } from "@/components/shared/GenericCard";
+// import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
+// import { notFound } from "next/navigation";
+import useRouteBouncer from "@/lib/hooks";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default function Page() {
+//   {
+//   params,
+// }: {
+//   params: Promise<{ slug: string }>;
+// }
+  useRouteBouncer();
 
-  const { data: productDetails, error: fetchSanityProductErr } =
-    await getAllSanityProductsByFilters({
-      slug: slug,
-    });
+  // const { slug } = await params;
 
-  if (fetchSanityProductErr) {
-    console.error("Error fetching product from Sanity:", fetchSanityProductErr);
-    notFound();
-  }
+  // const { data: productDetails, error: fetchSanityProductErr } =
+  //   await getAllSanityProductsByFilters({
+  //     slug: slug,
+  //   });
 
-  // console.log("Product Details:", productDetails);
+  // if (fetchSanityProductErr) {
+  //   console.error("Error fetching product from Sanity:", fetchSanityProductErr);
+  //   notFound();
+  // }
 
-  const product = productDetails[0];
-  const data = [
-    {
-      category: "Women",
-      description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
-      src: "/images/categories/women.jpeg",
-      alt: "A woman wearing a dress",
-    },
-    {
-      category: "Swimsuits",
-      description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
-      src: "/images/categories/swimsuit.jpeg",
-      alt: "A woman wearing a swimsuit reading a magazine",
-    },
-    {
-      category: "Watches",
-      description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
-      src: "/images/categories/watches.jpeg",
-      alt: "A woman wearing a swimsuit reading a magazine",
-    },
-  ];
+  // // console.log("Product Details:", productDetails);
+
+  // const product = productDetails[0];
+  // const data = [
+  //   {
+  //     category: "Women",
+  //     description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
+  //     src: "/images/categories/women.jpeg",
+  //     alt: "A woman wearing a dress",
+  //   },
+  //   {
+  //     category: "Swimsuits",
+  //     description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
+  //     src: "/images/categories/swimsuit.jpeg",
+  //     alt: "A woman wearing a swimsuit reading a magazine",
+  //   },
+  //   {
+  //     category: "Watches",
+  //     description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
+  //     src: "/images/categories/watches.jpeg",
+  //     alt: "A woman wearing a swimsuit reading a magazine",
+  //   },
+  // ];
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col w-full lg:h-auto lg:flex-row">
+      {/* <div className="flex flex-col w-full lg:h-auto lg:flex-row">
         <div className="relative flex h-[340px] w-full lg:h-[100vh] lg:w-1/2">
           <Image
             src={product.thumbnail.imgSrc}
@@ -72,7 +77,7 @@ export default async function Page({
             className="rounded-none"
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
