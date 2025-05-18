@@ -47,8 +47,8 @@ const ProductContainer = async ({
               alt={product.thumbnail.imgAlt}
               brand={product.brand}
               price={product.price}
-              summary={product.summary || ""}
               src={product.thumbnail.imgSrc}
+              name={product.name}
               key={index}
             />
           ))}
