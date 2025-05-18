@@ -36,8 +36,8 @@ function buildProductQuery(filters: {
 
   // Combine conditions with OR operator if there are any
   const filterClause = conditions.length > 0
-    ? `[_type == "Product" && (${conditions.join(' || ')})]`
-    : `[_type == "Product"]`;
+    ? `[_type == "Product" && (${conditions.join(' || ')}) && asset.image.asset->url != null]`
+    : `[_type == "Product" && asset.image.asset->url != null]`;
 
   // Construct and return the full query
   return `*${filterClause}{
@@ -93,6 +93,7 @@ export const filterSanityProducts = async ({ price, brandList, categoryList }: {
         ${price.max ? `&& price <= ${price.max}` : ""} 
         ${categoryList.length > 0 ? `&& category->name in ${JSON.stringify(categoryList)}` : ""}
         ${brandList.length > 0 ? `&& brand->name in ${JSON.stringify(brandList)}` : ""}
+        && asset.image.asset->url != null
         ]
         {
         "id": _id,
@@ -103,6 +104,7 @@ export const filterSanityProducts = async ({ price, brandList, categoryList }: {
         },
         targetAudience,
         price,
+        summary,
         "slug": slug.current,
         "brand": brand->name,
         "category": category->name,
@@ -196,7 +198,41 @@ export const getSanityProductBySlug = async (slug: string) => {
 }
 
 export const getLimitedSanityProductsByCategory = async (category: string, maxCount: number) => {
-  const query = `*[_type == "Product" && (category->slug.current == '${category}' || subCategory->slug.current == '${category}')] | order(_createdAt desc)[0...${maxCount}]{
+  const query = `*[_type == "Product" && (category->slug.current == '${category}' || subCategory->slug.current == '${category}'  || brand->name == '${category}') && asset.image.asset->url != null] | order(_createdAt desc)[0...${maxCount}]{
+        "id": _id,
+        name,
+        "thumbnail": {
+          "imgSrc": asset.image.asset->url,
+          "imgAlt": asset.alt
+        },
+        summary,
+        targetAudience,
+        price,
+        "slug": slug.current,
+        "brand": brand->name,
+        "category": category->name,
+        "parent": {
+          "name": parent->name,
+            "id": parent->_id
+        },
+        "createdAt": _createdAt
+      }`
+  const { data: products, error: fetchSanityProductsErr } = await tryCatch(sanityClient.fetch(query, { category }))
+  if (fetchSanityProductsErr) {
+    console.error("Error fetching products from Sanity:", fetchSanityProductsErr)
+    return {
+      data: null,
+      error: fetchSanityProductsErr,
+    }
+  }
+  return {
+    data: products as sanityProduct[],
+    error: null
+  }
+}
+
+export const searchProductsByCategory = async (category: string, maxCount: number) => {
+  const query = `*[_type == "Product" && (category->slug.current match '${category}*' || subCategory->slug.current match '${category}*'  || brand->name match '${category}*') && asset.image.asset->url != null] | order(_createdAt desc)[0...${maxCount}]{
         "id": _id,
         name,
         "thumbnail": {

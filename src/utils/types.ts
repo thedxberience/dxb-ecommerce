@@ -45,3 +45,8 @@ export type sanityProduct = {
 }
 
 export type FilterCategory = "main" | "price" | "brand" | "category" | "color";
+
+export type ProductCountGroup = {
+    name: string;
+    productCount: number;
+};

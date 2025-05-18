@@ -15,11 +15,8 @@ export default function Home() {
       <Hero />
       <Categories />
       <ProductContainer sectionHeader="Curated For You" />
-      <ProductContainer
-        sectionHeader="NEW ARRIVALS"
-        categorySlug="dresses-women"
-      />
-      {/* <ProductContainer sectionHeader="Shoes" /> */}
+      <ProductContainer sectionHeader="Dresses" categorySlug="dresses-women" />
+      <ProductContainer sectionHeader="bags" categorySlug="bags" />
       <Trends />
       <Brands />
       <ProductContainer

@@ -1,8 +1,6 @@
 "use client";
-
 import { useState } from "react";
 import { ChevronRight, X } from "lucide-react";
-
 import {
   Drawer,
   DrawerClose,
@@ -13,13 +11,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import ColorOption from "./filterOption/ColorOption";
 import BrandFilter from "./filterOption/BrandFilter";
 import CategoryFilter from "./filterOption/CategoryFilter";
 import { useProductStore } from "@/store/productStore";
-import { filterSanityProducts } from "@/server/sanity/products/products";
+import PriceFilter from "./filterOption/PriceFilter";
 
 type FilterCategory = "main" | "price" | "brand" | "category" | "color";
 
@@ -28,9 +23,13 @@ export function FilterSortDrawer() {
   const [open, setOpen] = useState(false);
 
   const filters = useProductStore((state) => state.filters);
+  const productsFallback = useProductStore((state) => state.productsFallback);
   const setProducts = useProductStore((state) => state.setProducts);
+  const resetFilters = useProductStore((state) => state.resetFilters);
 
   const resetFilter = () => {
+    resetFilters();
+    setProducts(productsFallback);
     setActiveFilter("main");
   };
 
@@ -42,19 +41,60 @@ export function FilterSortDrawer() {
     }, 300);
   };
 
-  const handleFilterClick = async () => {
-    // console.log("Filters:", filters);
-
-    const { data: filteredProducts, error: filteredProductsErr } =
-      await filterSanityProducts(filters);
-
-    if (filteredProductsErr) {
-      console.error(
-        "Error fetching filtered products from Sanity:",
-        filteredProductsErr
-      );
-      return;
+  const handleFilterByBrand = (brandList: string[], productBrand: string) => {
+    if (brandList.length > 0) {
+      return brandList.includes(productBrand);
+    } else {
+      return true;
     }
+  };
+
+  const handleFilterByCategory = (
+    categoryList: string[],
+    productCategory: string
+  ) => {
+    if (categoryList.length > 0) {
+      return categoryList.includes(productCategory);
+    } else {
+      return true;
+    }
+  };
+
+  const handleFilterByPrice = (
+    { min, max }: { min: number; max: number },
+    productPrice: number
+  ) => {
+    // If both min and max are not set or negative, allow all prices
+    if ((!min && !max) || min < 0 || max < 0) {
+      return true;
+    }
+    // Only min is set
+    if (min > 0 && !max) {
+      return productPrice >= min;
+    }
+    // Only max is set
+    if (!min && max > 0) {
+      return productPrice <= max;
+    }
+    // Both min and max are set
+    if (min > 0 && max > 0) {
+      return productPrice >= min && productPrice <= max;
+    }
+    // Fallback: allow all
+    return true;
+  };
+
+  const handleFilterClick = async () => {
+    // filter the products based on the filters
+    const filteredProducts = productsFallback.filter((prod) => {
+      const { brandList, categoryList, price } = filters;
+      return (
+        handleFilterByBrand(brandList, prod.brand) &&
+        handleFilterByCategory(categoryList, prod.category) &&
+        handleFilterByPrice(price, prod.price)
+      );
+    });
+
     if (!filteredProducts || filteredProducts.length === 0) {
       console.error("No filtered products found");
       return;
@@ -106,42 +146,7 @@ export function FilterSortDrawer() {
           )}
 
           {activeFilter === "price" && (
-            <div className="space-y-4">
-              <button
-                className="flex items-center text-foreground font-medium gap-2"
-                onClick={() => setActiveFilter("main")}
-              >
-                <span className="mr-2">←</span> Price
-              </button>
-
-              <div className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <Label className="text-sm text-muted-foreground">From</Label>
-                  <div className="flex items-center border rounded gap-2">
-                    <span className="text-muted-foreground ml-3 mr-1">$</span>
-                    <Input
-                      type="number"
-                      className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                      placeholder="0"
-                      defaultValue="0"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm text-muted-foreground">To</Label>
-                  <div className="flex items-center border rounded gap-2">
-                    <span className="text-muted-foreground ml-3 mr-1">$</span>
-                    <Input
-                      type="number"
-                      className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                      placeholder="25,000"
-                      defaultValue="25,000"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PriceFilter label="price" setActiveFilter={setActiveFilter} />
           )}
 
           {activeFilter === "brand" && (
@@ -155,7 +160,7 @@ export function FilterSortDrawer() {
             />
           )}
 
-          {activeFilter === "color" && (
+          {/* {activeFilter === "color" && (
             <div className="space-y-4">
               <button
                 className="flex items-center text-foreground font-medium gap-2"
@@ -173,7 +178,7 @@ export function FilterSortDrawer() {
                 <ColorOption color="#740202" label="Wine" />
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
         <DrawerFooter className="border-t p-4">

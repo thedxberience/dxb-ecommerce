@@ -61,7 +61,10 @@ export default async function Page({
         </div>
       </div>
       <div>
-        <ProductContainer sectionHeader="YOU MAY ALSO LIKE" />
+        <ProductContainer
+          sectionHeader="YOU MAY ALSO LIKE"
+          categorySlug={product.category}
+        />
       </div>
       <div className="flex overflow-auto w-full">
         {data.map((entry, index) => (
