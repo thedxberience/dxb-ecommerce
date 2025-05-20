@@ -28,7 +28,7 @@ const NavMenu = ({ variant }: NavbarProps) => {
     targetAudience: string,
     category: sanityCategory[]
   ) => {
-    console.log("Cat not filtered", category);
+    // console.log("Cat not filtered", category);
 
     const filteredCategories: sanityCategory[] = [];
 
@@ -64,8 +64,6 @@ const NavMenu = ({ variant }: NavbarProps) => {
       );
       return [];
     }
-
-    console.log("TA cAT: ", targetAudienceCategories);
 
     const menCategories = filterCategoriesByTargetAudience(
       "men",

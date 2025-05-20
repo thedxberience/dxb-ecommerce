@@ -28,7 +28,7 @@ const CustomButton = ({
         return (
           <span className="animate-spin">
             <Image
-              src="/icons/Loader.svg"
+              src="/icons/loader.svg"
               alt="Loading Icon"
               width={24}
               height={24}
