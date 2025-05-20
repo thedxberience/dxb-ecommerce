@@ -28,7 +28,6 @@ const SearchBar = ({ isSearchBarOpen, setIsSearchBarOpen }: SearchBarProps) => {
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.currentTarget.value;
-    console.log("Searched val: ", value);
 
     if (value != "") {
       setTimeout(async () => {
@@ -40,7 +39,7 @@ const SearchBar = ({ isSearchBarOpen, setIsSearchBarOpen }: SearchBarProps) => {
 
         if (error) {
           console.log(`Could not search products`, error.message);
-          setSearchProductErr(error.message);
+          setSearchProductErr("Something went wrong");
           // clearTimeout(searchDebouncer);
           return;
         }
@@ -63,7 +62,7 @@ const SearchBar = ({ isSearchBarOpen, setIsSearchBarOpen }: SearchBarProps) => {
         <div className="loading-state flex justify-center items-center min-h-20">
           <span className="animate-spin">
             <Image
-              src="/icons/Loader.svg"
+              src="/icons/loader.svg"
               alt="Loading Icon"
               width={40}
               height={40}
@@ -150,7 +149,7 @@ const SearchBar = ({ isSearchBarOpen, setIsSearchBarOpen }: SearchBarProps) => {
           </div>
         </div>
       </div>
-      <div className="search-results container flex flex-col w-full gap-3 mt-3">
+      <div className="search-results container w-11/12 flex flex-col lg:w-full gap-3 mt-3">
         <div className="header">
           {searchProductErr === "" ? (
             <h1 className="text-primary">Products</h1>
