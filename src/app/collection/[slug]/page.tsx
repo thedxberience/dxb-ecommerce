@@ -2,6 +2,8 @@ import { getAllSanityProductsByFilters } from "@/server/sanity/products/products
 import { notFound } from "next/navigation";
 import CollectionProducts from "./components/CollectionProducts";
 import { FormatSlugAsText } from "@/utils/util";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
@@ -28,7 +30,12 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           All {FormatSlugAsText(slug)}
         </h1>
       </div>
-      <CollectionProducts slug={slug} collectionProducts={collectionProducts} />
+      <Suspense fallback={<Loading />}>
+        <CollectionProducts
+          slug={slug}
+          collectionProducts={collectionProducts}
+        />
+      </Suspense>
     </main>
   );
 };

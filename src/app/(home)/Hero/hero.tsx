@@ -23,7 +23,7 @@ const Hero = () => {
             2025’s Finest: A Handpicked Collection of Timeless Luxury
           </p>
         </div>
-        <CustomButton btnName="Shop Now" />
+        <CustomButton btnName="Shop Now" isLink href="#categories" />
       </div>
     </header>
   );

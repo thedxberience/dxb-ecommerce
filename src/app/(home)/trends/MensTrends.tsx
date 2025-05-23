@@ -21,7 +21,12 @@ const MensTrends = () => {
         <p className="text-xl font-bold text-center font-noah text-accent-300">
           2025’s Finest: A Handpicked Collection of Timeless Luxury
         </p>
-        <CustomButton btnName="Shop now" invert />
+        <CustomButton
+          btnName="Shop now"
+          invert
+          isLink
+          href={`/collection/sneakers-men`}
+        />
       </div>
     </div>
   );

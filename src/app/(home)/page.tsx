@@ -15,20 +15,18 @@ export default function Home() {
       <Hero />
       <Categories />
       <ProductContainer sectionHeader="Curated For You" />
-      <ProductContainer sectionHeader="Dresses" categorySlug="dresses-women" />
+      <ProductContainer sectionHeader="Watches" categorySlug="watches" />
       <ProductContainer sectionHeader="bags" categorySlug="bags" />
       <Trends />
       <Brands />
-      <ProductContainer
-        sectionHeader="Jumpsuits"
-        categorySlug="jumpsuits-body-women"
-      />
+      <ProductContainer sectionHeader="Dresses" categorySlug="dresses-women" />
       {swimsuitCategoryData && (
         <CategoryContainer
           alt={swimsuitCategoryData.alt}
           category={swimsuitCategoryData.category}
           description={swimsuitCategoryData.description}
           src={swimsuitCategoryData.src}
+          slug="jumpsuits-body-women"
           className="h-[535px] mb-10 swimsuit-category overlay"
         />
       )}
@@ -38,6 +36,7 @@ export default function Home() {
           category={watchesCategoryData.category}
           description={watchesCategoryData.description}
           src={watchesCategoryData.src}
+          slug="watches"
           className="h-[535px] mb-10 overlay"
         />
       )}

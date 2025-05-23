@@ -6,6 +6,7 @@ type CategoryContainerProps = {
   description: string;
   src: string;
   alt: string;
+  slug: string;
   className?: string;
 };
 
@@ -15,6 +16,7 @@ const CategoryContainer = ({
   src,
   alt,
   className,
+  slug,
 }: CategoryContainerProps) => {
   return (
     <div
@@ -28,7 +30,7 @@ const CategoryContainer = ({
         <p className="text-xl font-bold text-center font-noah text-accent-300">
           {description}
         </p>
-        <CustomButton btnName="Shop now" />
+        <CustomButton btnName="Shop now" isLink href={`/collection/${slug}`} />
       </div>
     </div>
   );
