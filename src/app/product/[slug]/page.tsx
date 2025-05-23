@@ -4,6 +4,7 @@ import ProductContainer from "@/app/(home)/product_sections/ProductContainer";
 import { GenericCard } from "@/components/shared/GenericCard";
 import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -27,19 +28,19 @@ export default async function Page({
   const product = productDetails[0];
   const data = [
     {
-      category: "Women",
+      category: "dresses-women",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/women.jpeg",
       alt: "A woman wearing a dress",
     },
     {
-      category: "Swimsuits",
+      category: "jumpsuits-body-women",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/swimsuit.jpeg",
       alt: "A woman wearing a swimsuit reading a magazine",
     },
     {
-      category: "Watches",
+      category: "watches",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/watches.jpeg",
       alt: "A woman wearing a swimsuit reading a magazine",
@@ -68,12 +69,18 @@ export default async function Page({
       </div>
       <div className="flex overflow-auto w-full">
         {data.map((entry, index) => (
-          <GenericCard
+          <Link
+            className="w-full"
+            href={`/collection/${entry.category}`}
             key={index}
-            src={entry.src}
-            alt={entry.alt}
-            className="rounded-none"
-          />
+          >
+            <GenericCard
+              key={index}
+              src={entry.src}
+              alt={entry.alt}
+              className="rounded-none w-full"
+            />
+          </Link>
         ))}
       </div>
     </div>

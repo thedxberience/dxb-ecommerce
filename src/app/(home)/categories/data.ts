@@ -1,27 +1,31 @@
 export const categoryData = [
     {
         id: 0,
-        name: "Ramadan",
-        src: "/images/coco.jpeg",
+        name: "Bags",
+        src: "/images/bag.jpeg",
         alt: "Coco Chanel",
+        slug: "bags",
     },
     {
-        id: 0,
+        id: 1,
         name: "Watches",
         src: "/images/watch.jpeg",
         alt: "Watches",
+        slug: "watches",
     },
     {
-        id: 0,
-        name: "Limited",
-        src: "/images/versace.jpeg",
-        alt: "Versace",
+        id: 2,
+        name: "Jewelry",
+        src: "/images/jewelry.jpg",
+        alt: "Jewelry",
+        slug: "jewelry",
     },
     {
-        id: 0,
-        name: "New",
-        src: "/images/bag.jpeg",
+        id: 3,
+        name: "Accessories",
+        src: "/images/accessories.jpg",
         alt: "bag",
+        slug: "accessories",
     },
 ];
 

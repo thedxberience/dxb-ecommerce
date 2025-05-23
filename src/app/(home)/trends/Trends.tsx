@@ -18,6 +18,7 @@ const Trends = () => {
           category={womenCategoryData.category}
           description={womenCategoryData.description}
           src={womenCategoryData.src}
+          slug="dresses-women"
           className="h-screen justify-end pb-44 my-10"
         />
       )}
