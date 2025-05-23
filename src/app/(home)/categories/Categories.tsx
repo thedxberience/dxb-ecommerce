@@ -11,7 +11,7 @@ const Categories = () => {
     >
       <div className="container category flex justify-center items-center">
         <div className="flex lg:grid lg:grid-cols-4 lg:justify-center items-center gap-3 lg:gap-8 w-full overflow-auto">
-          {categoryData.map((category, index) => (
+          {categoryData.map((category) => (
             <Link href={`/collection/${category.slug}`} key={category.id}>
               <CategoryCard
                 src={category.src}
