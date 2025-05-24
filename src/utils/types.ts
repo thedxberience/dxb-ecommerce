@@ -10,7 +10,11 @@ export type sanityCategory = {
     id: string,
     name: string,
     subCategories: subCategoryType[],
-    productCount: number
+    productCount: number,
+    categoryImages: {
+        alt: string,
+        src: string
+    }[]
 }
 
 export type sanityBrand = {

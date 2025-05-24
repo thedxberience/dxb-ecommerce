@@ -11,15 +11,14 @@ export const getAllSanityCategories = async () => {
                         "id": _id,
                         name,
                         "slug": slug.current,
-                        targetAudience,
-                        "productCount": count(*[
-                        _type == "Product" && references(^._id)
-                        ])
+                        targetAudience
                     },
-                    "productCount": count(*[
-                        _type == "Product" && references(^._id)
-                    ])
-                }`
+                    "productCount": count(*[_type == "Product" && category->name == ^.name]),
+            "categoryImages": assets[]{
+                alt,
+                "src": image.asset->url
+            }
+  }`
     const { data: categories, error: fetchSanityCategoriesErr } = await tryCatch(sanityClient.fetch(query))
     if (fetchSanityCategoriesErr) {
         console.error("Error fetching categories from Sanity:", fetchSanityCategoriesErr)

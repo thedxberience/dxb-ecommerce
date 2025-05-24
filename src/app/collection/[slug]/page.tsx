@@ -7,7 +7,6 @@ import Loading from "./loading";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
-
   const { data: collectionProducts, error: fetchSanityProductsErr } =
     await getAllSanityProductsByFilters({
       category: slug,
@@ -39,5 +38,4 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     </main>
   );
 };
-
 export default page;
