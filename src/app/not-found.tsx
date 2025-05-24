@@ -19,7 +19,8 @@ const page = () => {
             Oops! Looks like that page is not available.
           </h1>
           <p className="lg:text-xl font-bold">
-            But don't worry, you can find other amazing content on our homepage.
+            But don&apos;t worry, you can find other amazing content on our
+            homepage.
           </p>
         </div>
         <CustomButton isLink href="/" btnName="Go Home" />
