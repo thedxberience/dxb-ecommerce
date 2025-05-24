@@ -15,10 +15,10 @@ export const categoryData = [
     },
     {
         id: 2,
-        name: "Jewelry",
+        name: "Jewellery",
         src: "/images/jewelry.jpg",
         alt: "Jewelry",
-        slug: "jewelry",
+        slug: "jewellery",
     },
     {
         id: 3,
