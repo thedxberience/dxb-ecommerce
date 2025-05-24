@@ -10,7 +10,11 @@ export type sanityCategory = {
     id: string,
     name: string,
     subCategories: subCategoryType[],
-    productCount: number
+    productCount: number,
+    categoryImages: {
+        alt: string,
+        src: string
+    }[]
 }
 
 export type sanityBrand = {
@@ -45,3 +49,8 @@ export type sanityProduct = {
 }
 
 export type FilterCategory = "main" | "price" | "brand" | "category" | "color";
+
+export type ProductCountGroup = {
+    name: string;
+    productCount: number;
+};

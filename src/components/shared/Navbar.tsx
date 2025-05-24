@@ -17,7 +17,8 @@ const Navbar = () => {
     other: "text-primary",
   };
 
-  const isHomePage = pathname === "/" ? "home" : "other";
+  const isHomePage =
+    pathname === "/" || pathname === "/join" ? "home" : "other";
 
   React.useEffect(() => {
     handleWindowScrollState();

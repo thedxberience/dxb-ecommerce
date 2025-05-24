@@ -1,25 +1,9 @@
 import CustomButton from "@/components/shared/CustomButton";
 import Image from "next/image";
-import Link from "next/link";
 
 const page = () => {
   return (
     <header className="relative mb-10">
-      <div className="header absolute top-4 left-0 w-full">
-        <div className="logo relative z-50 w-full">
-          <Link
-            href="/join"
-            className="justify-center items-center flex gap-2 w-full"
-          >
-            <Image
-              src="/icons/dxberience_logo.svg"
-              alt="Dxberience Logo"
-              width={98}
-              height={24}
-            />
-          </Link>
-        </div>
-      </div>
       <div className="hero absolute max-w-screen w-full h-screen max-h-screen top-0 left-0">
         <Image
           src={"/images/hero-img.jpeg"}

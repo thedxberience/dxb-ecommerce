@@ -5,16 +5,20 @@ import { sanityCategory } from "@/utils/types"
 
 export const getAllSanityCategories = async () => {
     const query = `*[_type == "Category"]{
-        "id": _id,
-        name,
-        "subCategories": subCategories[]->{
-            "id": _id,
-            name,
-            "slug": slug.current,
-            targetAudience
-        },
-        "productCount": count(*[_type == "Product" && category->name == ^.name])
-      }`
+                    "id": _id,
+                    name,
+                    "subCategories": subCategories[]->{
+                        "id": _id,
+                        name,
+                        "slug": slug.current,
+                        targetAudience
+                    },
+                    "productCount": count(*[_type == "Product" && category->name == ^.name]),
+            "categoryImages": assets[]{
+                alt,
+                "src": image.asset->url
+            }
+  }`
     const { data: categories, error: fetchSanityCategoriesErr } = await tryCatch(sanityClient.fetch(query))
     if (fetchSanityCategoriesErr) {
         console.error("Error fetching categories from Sanity:", fetchSanityCategoriesErr)

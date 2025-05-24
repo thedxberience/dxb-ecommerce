@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-// import Navbar from "@/components/shared/Navbar";
-// import Footer from "@/components/shared/Footer";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
 
 const IvyPresto = localFont({
   src: "../../public/font/Ivy Presto/Ivy Presto 3.otf",
@@ -17,9 +17,9 @@ const noah = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Luxury Shops By Dxberience",
+  title: "Dxberience | Curated Luxury & Lifestyle Shopping",
   description:
-    "Explore our catalogue for personalized style advice, early access to collections, and curated shopping experiences tailored just for you.",
+    "Discover a premium shopping experience with Dxberience — featuring exclusive fashion, luxury essentials, and lifestyle collections handpicked for the modern trendsetter.",
 };
 
 export default function RootLayout({
@@ -32,9 +32,9 @@ export default function RootLayout({
       <body
         className={`${IvyPresto.variable} ${noah.variable} font-noah antialiased`}
       >
-        {/* <Navbar /> */}
+        <Navbar />
         {children}
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );

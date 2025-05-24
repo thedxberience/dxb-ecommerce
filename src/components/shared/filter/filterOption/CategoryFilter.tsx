@@ -1,7 +1,6 @@
-import { FilterCategory, sanityCategory } from "@/utils/types";
-import { SetStateAction, useEffect, useState } from "react";
+import { FilterCategory } from "@/utils/types";
+import { SetStateAction } from "react";
 import BrandCheckbox from "./BrandCheckbox";
-import { getAllSanityCategories } from "@/server/sanity/categories/category";
 import { useProductStore } from "@/store/productStore";
 
 type BrandCheckboxProps = {
@@ -10,35 +9,12 @@ type BrandCheckboxProps = {
 };
 
 const CategoryFilter = ({ setActiveFilter }: BrandCheckboxProps) => {
-  const [allCategories, setAllCategories] = useState<sanityCategory[]>([]);
   const filters = useProductStore((state) => state.filters);
   const setFilters = useProductStore((state) => state.setFilters);
-
-  const fetchAllCategories = async () => {
-    const { data: categories, error: fetchSanityCategoriesErr } =
-      await getAllSanityCategories();
-
-    if (fetchSanityCategoriesErr) {
-      console.error(
-        "Error fetching categories from Sanity:",
-        fetchSanityCategoriesErr
-      );
-      return;
-    }
-
-    if (!categories || categories.length === 0) {
-      console.error("No categories found");
-      return;
-    }
-    setAllCategories(categories);
-  };
-
-  useEffect(() => {
-    fetchAllCategories();
-  }, []);
+  const allCategories = useProductStore((state) => state.categoryFilter);
 
   const addCategoryFilter = (brand: string, checked: boolean) => {
-    const categoryFilters: Set<string> = new Set();
+    const categoryFilters: Set<string> = new Set(filters.categoryList);
 
     if (checked) {
       categoryFilters.add(brand);
@@ -63,9 +39,9 @@ const CategoryFilter = ({ setActiveFilter }: BrandCheckboxProps) => {
       </button>
 
       <div className="space-y-3 mt-4 flex flex-col justify-start items-center gap-3">
-        {allCategories.map((category) => (
+        {allCategories.map((category, index) => (
           <BrandCheckbox
-            key={category.id}
+            key={index}
             addBrandFilter={addCategoryFilter}
             label={category.name}
             count={category.productCount}

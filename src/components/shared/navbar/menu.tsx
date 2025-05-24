@@ -28,7 +28,7 @@ const NavMenu = ({ variant }: NavbarProps) => {
     targetAudience: string,
     category: sanityCategory[]
   ) => {
-    console.log("Cat not filtered", category);
+    // console.log("Cat not filtered", category);
 
     const filteredCategories: sanityCategory[] = [];
 
@@ -64,8 +64,6 @@ const NavMenu = ({ variant }: NavbarProps) => {
       );
       return [];
     }
-
-    console.log("TA cAT: ", targetAudienceCategories);
 
     const menCategories = filterCategoriesByTargetAudience(
       "men",
@@ -124,12 +122,17 @@ const NavMenu = ({ variant }: NavbarProps) => {
                   <div className="flex flex-col gap-4 w-full">
                     {categoryData &&
                       categoryData[category].map((subCategory, index) => {
+                        const isMenCategory = category === "men";
+                        const { alt, src } =
+                          categoryData[category][index].categoryImages[
+                            isMenCategory ? 1 : 0
+                          ];
                         return (
                           <SubCategoryAccordion
                             key={index}
                             name={subCategory.name}
-                            alt={"Women category"}
-                            src={"/images/categories/women.jpeg"}
+                            alt={alt}
+                            src={src}
                             subCategories={subCategory.subCategories}
                           />
                         );
@@ -148,7 +151,13 @@ const NavMenu = ({ variant }: NavbarProps) => {
               </p>
               <div className="send-message flex flex-col justify-center items-center gap-1 w-full text-black">
                 <h2 className="text-lg text-center">SEND US A MESSAGE</h2>
-                <WhatsappLogo />
+                <a
+                  href="https://wa.me/+971585787558"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <WhatsappLogo />
+                </a>
               </div>
             </div>
           </div>

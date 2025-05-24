@@ -1,5 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { useProductStore } from "@/store/productStore";
 
 type BrandCheckboxProps = {
   addBrandFilter: (brand: string, checked: boolean) => void;
@@ -15,10 +16,13 @@ function BrandCheckbox({ label, count, addBrandFilter }: BrandCheckboxProps) {
     addBrandFilter(label, checked);
   };
 
+  const { brandList, categoryList } = useProductStore((state) => state.filters);
+
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-2 w-full">
         <Checkbox
+          checked={brandList.includes(label) || categoryList.includes(label)}
           onCheckedChange={(checked) => handleCheckboxClick(checked)}
           id={`checkbox-${label}`}
           className="w-6 h-6"

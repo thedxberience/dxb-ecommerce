@@ -1,7 +1,6 @@
-import { FilterCategory, sanityBrand } from "@/utils/types";
+import { FilterCategory } from "@/utils/types";
 import React, { SetStateAction } from "react";
 import BrandCheckbox from "./BrandCheckbox";
-import { getAllSanityBrands } from "@/server/sanity/brands/brands";
 import { useProductStore } from "@/store/productStore";
 
 type BrandCheckboxProps = {
@@ -9,29 +8,13 @@ type BrandCheckboxProps = {
   setActiveFilter: (value: SetStateAction<FilterCategory>) => void;
 };
 
-const BrandFilter = ({ label, setActiveFilter }: BrandCheckboxProps) => {
-  const [allBrands, setAllBrands] = React.useState<sanityBrand[]>([]);
+const BrandFilter = ({ setActiveFilter }: BrandCheckboxProps) => {
   const filters = useProductStore((state) => state.filters);
   const setFilters = useProductStore((state) => state.setFilters);
-
-  const fetchAllBrands = async () => {
-    const { data: brands, error: fetchSanityBrandsErr } =
-      await getAllSanityBrands();
-
-    if (fetchSanityBrandsErr) {
-      console.error("Error fetching brands from Sanity:", fetchSanityBrandsErr);
-      return;
-    }
-
-    if (!brands || brands.length === 0) {
-      console.error("No brands found");
-      return;
-    }
-    setAllBrands(brands);
-  };
+  const allBrandFilters = useProductStore((state) => state.brandsFilter);
 
   const addBrandFilter = (brand: string, checked: boolean) => {
-    const brandFilters: Set<string> = new Set();
+    const brandFilters: Set<string> = new Set(filters.brandList);
 
     if (checked) {
       brandFilters.add(brand);
@@ -44,10 +27,6 @@ const BrandFilter = ({ label, setActiveFilter }: BrandCheckboxProps) => {
     });
   };
 
-  React.useEffect(() => {
-    fetchAllBrands();
-  }, [label]);
-
   return (
     <div className="space-y-4">
       <button
@@ -58,9 +37,9 @@ const BrandFilter = ({ label, setActiveFilter }: BrandCheckboxProps) => {
       </button>
 
       <div className="space-y-3 mt-4 flex flex-col justify-start items-center gap-3">
-        {allBrands.map((brand) => (
+        {allBrandFilters.map((brand, index) => (
           <BrandCheckbox
-            key={brand.id}
+            key={index}
             addBrandFilter={addBrandFilter}
             label={brand.name}
             count={brand.productCount}
