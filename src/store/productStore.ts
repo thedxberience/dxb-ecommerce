@@ -82,7 +82,7 @@ export const useProductStore = create<ProductStore>()(
         {
             name: "product-store", // unique name
             partialize: (state): Partial<ProductStore> => ({
-                productsFallback: state.productsFallback,
+                // productsFallback: state.productsFallback,
                 brands: state.brands,
                 categories: state.categories,
                 filters: state.filters,
