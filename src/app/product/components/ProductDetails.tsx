@@ -5,8 +5,9 @@ import { ContextMenu } from "./ContextMenu";
 import { MiniProductCard } from "./MiniProductCard";
 import { sanityProduct } from "@/utils/types";
 import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
-import { currencyFormatter } from "@/utils/util";
+import { currencyFormatter, FormatSlugAsText } from "@/utils/util";
 import { PortableText } from "@portabletext/react";
+import Link from "next/link";
 
 type ProductDetailProps = {
   product: sanityProduct;
@@ -28,8 +29,20 @@ export async function ProductDetails({ product }: ProductDetailProps) {
   return (
     <div className="w-full text-black h-auto">
       {/* Header */}
-      <div className="mb-4 text-sm">Home / Womens</div>
-      <div className="mb-2 text-sm">{product.brand}</div>
+      <div className="mb-4 text-sm">
+        <Link className="text-primary" href="/">
+          Home
+        </Link>{" "}
+        /{" "}
+        <Link className="text-primary" href={`/collection/${product.category}`}>
+          {FormatSlugAsText(product.category)}
+        </Link>
+      </div>
+      <div className="mb-2 text-sm">
+        <Link className="text-primary" href={`/collection/${product.brand}`}>
+          {product.brand}
+        </Link>
+      </div>
       <div className="flex w-full text-xl justify-between">
         <span>{product.name}</span>
         <span>{currencyFormatter(product.price, "AED")}</span>
@@ -75,7 +88,7 @@ export async function ProductDetails({ product }: ProductDetailProps) {
       {/* Tabs */}
       <ContextMenu
         minHeight={50}
-        maxHeight={150}
+        maxHeight={300}
         menuList={[
           {
             text: "Description",

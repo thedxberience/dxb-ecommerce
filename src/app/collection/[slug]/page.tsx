@@ -7,11 +7,12 @@ import Loading from "./loading";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
+  const slugValue = decodeURIComponent(slug);
   const { data: collectionProducts, error: fetchSanityProductsErr } =
     await getAllSanityProductsByFilters({
-      category: slug,
-      subCategory: slug,
-      brand: slug,
+      category: slugValue,
+      subCategory: slugValue,
+      brand: slugValue,
     });
 
   if (fetchSanityProductsErr) {
@@ -26,7 +27,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     <main className="bg-white flex justify-center items-center flex-col py-40">
       <div className="page-title container">
         <h1 className="text-2xl lg:text-7xl font-bold text-center font-ivyPresto text-primary">
-          All {FormatSlugAsText(slug)}
+          All {FormatSlugAsText(slugValue)}
         </h1>
       </div>
       <Suspense fallback={<Loading />}>

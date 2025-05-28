@@ -4,7 +4,7 @@ import { sanityClient } from "../sanity"
 import { sanityBrand } from "@/utils/types"
 
 export const getAllSanityBrands = async () => {
-    const query = `*[_type == "Brand"]{
+    const query = `*[_type == "Brand" && count(*[_type == "Product" && brand->name == ^.name]) > 0]{
         "id": _id,
         name,
         "image": {
