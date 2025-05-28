@@ -49,7 +49,7 @@ export async function ProductDetails({ product }: ProductDetailProps) {
       {/* Action Buttons */}
       <div className="mt-5 flex flex-col gap-4">
         <a
-          href="https://wa.me/971585787558"
+          href={`https://wa.me/971585787558?text=Hello%20I%20would%like%20to%20order%20your%20${product.brand}%20${product.name}%20product`}
           target="_blank"
           rel="noopener noreferrer"
         >
