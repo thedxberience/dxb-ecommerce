@@ -40,6 +40,14 @@ export async function tryCatch<T, E = Error>(
 }
 
 export function currencyFormatter(amount: number, currency = 'USD', locale = 'en-US') {
+  if (currency === 'AED') {
+    currency = "USD";
+    amount = amount * 0.27
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency,
+    }).format(amount);
+  }
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,

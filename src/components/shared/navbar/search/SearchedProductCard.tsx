@@ -21,7 +21,7 @@ const SearchedProductCard = ({
 }: SearchedProductCardProps) => {
   return (
     <Link
-      href={`/collection/${slug}`}
+      href={`/product/${slug}`}
       className="flex justify-start items-center gap-3"
     >
       <div className="image">
@@ -38,7 +38,9 @@ const SearchedProductCard = ({
       <div className="product-details flex flex-col justify-start items-start gap-1">
         <p className="text-xs uppercase font-noah text-acccent-400">{brand}</p>
         <h2 className="font-noah text-primary">{name}</h2>
-        <p className="font-noah text-acccent-400">{currencyFormatter(price)}</p>
+        <p className="font-noah text-acccent-400">
+          {currencyFormatter(price, "AED")}
+        </p>
       </div>
     </Link>
   );
