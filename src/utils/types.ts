@@ -45,7 +45,7 @@ export type sanityProduct = {
         name: string,
         id: string
     },
-    createdAt: Date
+    createdAt: Date,
 }
 
 export type FilterCategory = "main" | "price" | "brand" | "category" | "color";

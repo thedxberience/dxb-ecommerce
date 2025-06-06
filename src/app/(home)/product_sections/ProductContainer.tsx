@@ -36,8 +36,10 @@ const ProductContainer = async ({
           <h2 className="font-ivyPresto text-xl lg:text-4xl uppercase">
             {sectionHeader}
           </h2>
-          <Link href={`/collection/${categorySlug}`}>
-            <p className="uppercase font-bold text-sm underline">see more</p>
+          <Link className="cursor-pointer" href={`/collection/${categorySlug}`}>
+            <p className="uppercase font-bold text-sm underline cursor-pointer">
+              see more
+            </p>
           </Link>
         </div>
         <div className="flex section-overflow lg:grid lg:grid-cols-4 lg:justify-center items-center gap-8 w-full mt-8 max-w-11/12 lg:max-w-full overflow-auto lg:overflow-hidden">

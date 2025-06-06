@@ -18,3 +18,15 @@ export type Product = {
   parentVariant?: string;
   variants: Product[];
 };
+
+export type SanityProductFilters = {
+  category?: string
+  brand?: string
+  parent?: string
+  targetAudience?: string
+  slug?: string
+  subCategory?: string
+  pageNumber?: number,
+  pageSize?: number,
+  lastId?: string
+}

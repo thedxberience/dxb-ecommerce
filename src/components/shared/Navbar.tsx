@@ -46,14 +46,20 @@ const Navbar = () => {
     <div
       className={`flex flex-col navbar justify-center items-center fixed top-0 w-full h-16 ${navbarStyle}`}
     >
-      <nav className="container w-full  flex justify-between items-center p-4">
+      <nav className="container w-full flex justify-between items-center p-4">
         <div className="hamburger-menu">
-          <NavMenu variant={navBarVariants[isHomePage]} />
+          <NavMenu
+            variant={
+              navbarStyle === "" && isHomePage === "home"
+                ? navBarVariants.other
+                : navBarVariants[isHomePage]
+            }
+          />
         </div>
 
         <div className="logo">
           <Link href="/" className="justify-center items-center flex gap-2">
-            {isHomePage === "home" ? (
+            {navbarStyle !== "" && isHomePage === "home" ? (
               <Image
                 src="/icons/dxberience_logo.svg"
                 alt="Dxberience Logo"
@@ -73,7 +79,11 @@ const Navbar = () => {
 
         <div className="nav-btns flex justify-center items-center gap-4">
           <div
-            className={`search ${navBarVariants[isHomePage]}`}
+            className={`search ${
+              navbarStyle === "" && isHomePage === "home"
+                ? navBarVariants.other
+                : navBarVariants[isHomePage]
+            }`}
             onClick={() => setIsSearchBarOpen(true)}
           >
             <SearchIcon />
