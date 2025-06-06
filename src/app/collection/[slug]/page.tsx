@@ -5,8 +5,8 @@ import {
 import { notFound } from "next/navigation";
 import CollectionProducts from "./components/CollectionProducts";
 import { FormatSlugAsText } from "@/utils/util";
-import { Suspense } from "react";
-import Loading from "./loading";
+// import { Suspense } from "react";
+// import Loading from "./loading";
 
 // const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 //   const { slug } = await params;

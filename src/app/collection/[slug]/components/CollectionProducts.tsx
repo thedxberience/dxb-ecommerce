@@ -10,7 +10,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import Pagination from "./pagination";
 import { usePaginationStore } from "@/store/paginationStore";
-import { useSearchParams } from "next/navigation";
 import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
 import Loading from "../loading";
 import { useCallback } from "react";
@@ -173,7 +172,9 @@ const CollectionProducts = ({
   useEffect(() => {
     resetFilters();
     if (currentPage === 1) {
+      setIsLoading(true);
       setProducts(collectionProducts);
+      setIsLoading(false);
     } else {
       handleOnPageChange(currentPage);
     }

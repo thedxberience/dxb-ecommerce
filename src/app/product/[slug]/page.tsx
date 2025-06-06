@@ -2,10 +2,7 @@ import Image from "next/image";
 import { ProductDetails } from "../components/ProductDetails";
 import ProductContainer from "@/app/(home)/product_sections/ProductContainer";
 import { GenericCard } from "@/components/shared/GenericCard";
-import {
-  getAllSanityProductsByFilters,
-  getSanityProductBySlug,
-} from "@/server/sanity/products/products";
+import { getSanityProductBySlug } from "@/server/sanity/products/products";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
