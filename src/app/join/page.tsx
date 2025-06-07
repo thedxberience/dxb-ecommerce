@@ -6,7 +6,7 @@ const page = () => {
     <header className="relative mb-10">
       <div className="hero absolute max-w-screen w-full h-screen max-h-screen top-0 left-0">
         <Image
-          src={"/images/hero-img.jpeg"}
+          src={"/images/hero-img.png"}
           alt="A lady dressed modestly giving off a luxurious vibe"
           fill
           className="object-cover"

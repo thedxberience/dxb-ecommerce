@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Heart from "./Heart";
 import { cn, currencyFormatter } from "@/utils/util";
@@ -36,6 +37,7 @@ const ProductCard = ({
               src={src}
               alt={alt}
               className="object-cover group-hover:scale-105 transition-all duration-500 ease-in-out"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               fill
             />
           )}

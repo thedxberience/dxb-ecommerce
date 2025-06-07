@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ProductDetails } from "../components/ProductDetails";
 import ProductContainer from "@/app/(home)/product_sections/ProductContainer";
 import { GenericCard } from "@/components/shared/GenericCard";
-import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
+import { getSanityProductBySlug } from "@/server/sanity/products/products";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
@@ -14,9 +14,7 @@ export default async function Page({
   const { slug } = await params;
 
   const { data: productDetails, error: fetchSanityProductErr } =
-    await getAllSanityProductsByFilters({
-      slug: slug,
-    });
+    await getSanityProductBySlug(slug);
 
   if (fetchSanityProductErr) {
     console.error("Error fetching product from Sanity:", fetchSanityProductErr);
@@ -25,7 +23,7 @@ export default async function Page({
 
   // console.log("Product Details:", productDetails);
 
-  const product = productDetails[0];
+  const product = productDetails;
   const data = [
     {
       category: "dresses-women",
