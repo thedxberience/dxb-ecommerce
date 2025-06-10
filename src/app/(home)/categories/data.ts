@@ -2,14 +2,14 @@ export const categoryData = [
     {
         id: 0,
         name: "Bags",
-        src: "/images/bag.jpeg",
+        src: "/images/bag.jpg",
         alt: "Coco Chanel",
         slug: "bags",
     },
     {
         id: 1,
         name: "Watches",
-        src: "/images/watch.jpeg",
+        src: "/images/watch.jpg",
         alt: "Watches",
         slug: "watches",
     },

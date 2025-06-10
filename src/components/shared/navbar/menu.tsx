@@ -58,12 +58,14 @@ const NavMenu = ({ variant }: NavbarProps) => {
     } = await getAllSanityCategories();
 
     if (fetchTargetAudienceCategoryErr) {
-      console.error(
-        "Error fetching target audience products from Sanity:",
-        fetchTargetAudienceCategoryErr
-      );
+      // console.error(
+      //   "Error fetching target audience products from Sanity:",
+      //   fetchTargetAudienceCategoryErr
+      // );
       return [];
     }
+
+    if (!targetAudienceCategories) return [];
 
     const menCategories = filterCategoriesByTargetAudience(
       "men",
@@ -111,7 +113,7 @@ const NavMenu = ({ variant }: NavbarProps) => {
                 </TabsTrigger>
               ))}
             </TabsList>
-            {mainCategories.map(async (category) => {
+            {mainCategories.map((category) => {
               // Fetch target audience categories
               return (
                 <TabsContent
@@ -121,6 +123,7 @@ const NavMenu = ({ variant }: NavbarProps) => {
                 >
                   <div className="flex flex-col gap-4 w-full">
                     {categoryData &&
+                      categoryData[category] &&
                       categoryData[category].map((subCategory, index) => {
                         const isMenCategory = category === "men";
                         const { alt, src } =
@@ -129,7 +132,7 @@ const NavMenu = ({ variant }: NavbarProps) => {
                           ];
                         return (
                           <SubCategoryAccordion
-                            key={index}
+                            key={subCategory.id}
                             name={subCategory.name}
                             alt={alt}
                             src={src}
