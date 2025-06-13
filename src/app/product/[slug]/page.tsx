@@ -1,48 +1,51 @@
+// app/products/[slug]/page.tsx
+
 import Image from "next/image";
-import { ProductDetails } from "../components/ProductDetails";
+import Link from "next/link";
 import ProductContainer from "@/app/(home)/product_sections/ProductContainer";
 import { GenericCard } from "@/components/shared/GenericCard";
-import { getSanityProductBySlug } from "@/server/sanity/products/products";
+import {
+  getAllProductSlugs,
+  getSanityProductBySlug
+} from "@/server/sanity/products/products";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { ProductDetails } from "../components/ProductDetails";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export const dynamic = "force-static";
+export async function generateStaticParams() {
+  const { data: slugs } = await getAllProductSlugs();
+  return slugs?.map((slug) => ({ slug })) || [];
+}
+
+type PageProps = {
+  params: { slug: string };
+};
+
+export default async function Page({ params }: PageProps) {
   const { slug } = await params;
 
-  const { data: productDetails, error: fetchSanityProductErr } =
-    await getSanityProductBySlug(slug);
+  const { data: product, error } = await getSanityProductBySlug(slug);
+  if (error || !product) notFound();
 
-  if (fetchSanityProductErr) {
-    console.error("Error fetching product from Sanity:", fetchSanityProductErr);
-    notFound();
-  }
-
-  // console.log("Product Details:", productDetails);
-
-  const product = productDetails;
   const data = [
     {
       category: "dresses-women",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/women.jpeg",
-      alt: "A woman wearing a dress",
+      alt: "A woman wearing a dress"
     },
     {
       category: "jumpsuits-body-women",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/swimsuit.jpeg",
-      alt: "A woman wearing a swimsuit reading a magazine",
+      alt: "A woman wearing a swimsuit reading a magazine"
     },
     {
       category: "watches",
       description: "2025’s Finest: A Handpicked Collection of Timeless Luxury",
       src: "/images/categories/watches.jpeg",
-      alt: "A woman wearing a swimsuit reading a magazine",
-    },
+      alt: "A woman wearing a swimsuit reading a magazine"
+    }
   ];
   return (
     <div className="flex flex-col">
