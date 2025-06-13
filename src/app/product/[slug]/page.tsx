@@ -17,9 +17,12 @@ export async function generateStaticParams() {
   return slugs?.map((slug) => ({ slug })) || [];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function Page({
+  params
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
   const { data: product, error } = await getSanityProductBySlug(slug);
   if (error || !product) notFound();
