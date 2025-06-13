@@ -18,8 +18,8 @@ export async function generateStaticParams() {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function Page(paramProps: Promise<{ params: any }>) {
-  const { slug } = (await paramProps).params;
+export default async function Page({ params }: { params: { slug: string } }) {
+  const { slug } = params;
 
   const { data: product, error } = await getSanityProductBySlug(slug);
   if (error || !product) notFound();
