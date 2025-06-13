@@ -153,15 +153,7 @@ const CollectionProducts = ({ slug, currentPage }: CollectionProductsProps) => {
     handleOnPageChange(currentPage);
     setProductFallback(products);
     setLastIdPerPage(1, products[products.length - 1]?.id || "");
-  }, [
-    setProducts,
-    slug,
-    currentPage,
-    handleOnPageChange,
-    products,
-    setLastIdPerPage,
-    setProductFallback,
-  ]);
+  }, [setProducts, slug, currentPage]);
 
   return (
     <section className="container flex flex-col justify-center items-center gap-8 mt-10 w-full">
