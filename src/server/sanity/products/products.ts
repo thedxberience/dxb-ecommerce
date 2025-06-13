@@ -40,17 +40,16 @@ function buildProductQuery(filters: SanityProductFilters) {
     lastIdConition = ` && _id > "${lastId}"`;
   } else {
     // If lastId is not provided, we will slice the results based on pageNumber and pageSize
-    sliceCondition = ` | order(_id)[${(pageNumber - 1) * pageSize}...${
-      pageNumber * pageSize
-    }]`;
+    sliceCondition = ` | order(_id)[${(pageNumber - 1) * pageSize}...${pageNumber * pageSize
+      }]`;
   }
 
   // Combine conditions with OR operator if there are any
   const filterClause =
     conditions.length > 0
       ? `[_type == "Product" && (${conditions.join(
-          " || "
-        )}) && defined(asset.image.asset->url)${lastIdConition}]`
+        " || "
+      )}) && defined(asset.image.asset->url)${lastIdConition}]`
       : `[_type == "Product" && defined(asset.image.asset->url)${lastIdConition}]`;
 
   // Construct and return the full query
@@ -86,10 +85,10 @@ export const getAllSanityProductsByFilterCount = async (
   const conditions = [];
 
   // Only add conditions for filters that are defined
-  if (category) conditions.push(`category->slug.current == '${category}'`);
+  if (category) conditions.push(`psuedoCategory == '${category}'`);
   if (subCategory)
-    conditions.push(`subCategory->slug.current == '${subCategory}'`);
-  if (brand) conditions.push(`brand->name == '${brand}'`);
+    conditions.push(`psuedoSubCategory == '${subCategory}'`);
+  if (brand) conditions.push(`psuedoBrand == '${brand}'`);
   if (parent) conditions.push(`parent->name == '${parent}'`);
   if (slug) conditions.push(`slug.current == '${slug}'`);
   if (targetAudience) conditions.push(`targetAudience == '${targetAudience}'`);
@@ -127,6 +126,7 @@ export const getAllSanityProductsByFilters = async (
   const { data: products, error: fetchSanityProductsErr } = await tryCatch(
     sanityClient.fetch(query)
   );
+
   if (fetchSanityProductsErr) {
     console.error(
       "Error fetching products from Sanity:",
@@ -137,6 +137,8 @@ export const getAllSanityProductsByFilters = async (
       error: fetchSanityProductsErr
     };
   }
+
+
 
   return {
     data: products as sanityProduct[],
@@ -156,16 +158,14 @@ export const filterSanityProducts = async ({
   const query = `*[_type == "Product" 
         ${price.min ? `&& price >= ${price.min}` : ""} 
         ${price.max ? `&& price <= ${price.max}` : ""} 
-        ${
-          categoryList.length > 0
-            ? `&& category->name in ${JSON.stringify(categoryList)}`
-            : ""
-        }
-        ${
-          brandList.length > 0
-            ? `&& brand->name in ${JSON.stringify(brandList)}`
-            : ""
-        }
+        ${categoryList.length > 0
+      ? `&& category->name in ${JSON.stringify(categoryList)}`
+      : ""
+    }
+        ${brandList.length > 0
+      ? `&& brand->name in ${JSON.stringify(brandList)}`
+      : ""
+    }
         && asset.image.asset->url != null
         ]
         {
@@ -240,7 +240,7 @@ export const getSanityProductBySlug = async (slug: string) => {
     };
   }
 
-  console.log("Sanity Product Data:", product);
+  // console.log("Sanity Product Data:", product);
 
   return {
     data: product[0] as sanityProduct,

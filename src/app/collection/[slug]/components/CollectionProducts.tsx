@@ -2,32 +2,26 @@
 import ProductCard from "@/app/(home)/product_sections/components/ProductCard";
 import { FilterSortDrawer } from "@/components/shared/filter/filter-sort-drawer";
 import { useProductStore } from "@/store/productStore";
-import { ProductCountGroup, sanityProduct } from "@/utils/types";
-import {
-  FormatSlugAsText,
-  getAssociatedGroupsWithProductCount,
-} from "@/utils/util";
-import { useEffect, useRef, useState } from "react";
+import { sanityProduct } from "@/utils/types";
+import { tryCatch } from "@/utils/util";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Pagination from "./pagination";
 import { usePaginationStore } from "@/store/paginationStore";
-import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
+// import { getAllSanityProductsByFilters } from "@/server/sanity/products/products";
 import Loading from "../loading";
 import { useCallback } from "react";
+import { notFound } from "next/navigation";
+import { collectionReqFetchResponse } from "../page";
 
 type CollectionProductsProps = {
   slug: string;
   currentPage: number;
-  productCount: number;
-  collectionProducts: sanityProduct[];
+  // collectionProducts: sanityProduct[];
 };
 
-const CollectionProducts = ({
-  slug,
-  currentPage,
-  productCount,
-  collectionProducts,
-}: CollectionProductsProps) => {
+const CollectionProducts = ({ slug, currentPage }: CollectionProductsProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [productCount, setProductCount] = useState<number>();
   const productGrid = useRef<HTMLDivElement>(null);
 
   const setProducts = useProductStore((state) => state.setProducts);
@@ -35,13 +29,6 @@ const CollectionProducts = ({
     (state) => state.setProductFallback
   );
   const products = useProductStore((state) => state.products);
-  const setBrandFilters = useProductStore((state) => state.setBrandFilters);
-  const setCategoryFilters = useProductStore(
-    (state) => state.setCategoryFilters
-  );
-  const filters = useProductStore((state) => state.filters);
-  const setFilters = useProductStore((state) => state.setFilters);
-  const resetFilters = useProductStore((state) => state.resetFilters);
 
   // const currentPage = usePaginationStore((state) => state.currentPage);
   // const setCurrentPage = usePaginationStore((state) => state.setCurrentPage);
@@ -52,37 +39,6 @@ const CollectionProducts = ({
   const setLastIdPerPage = usePaginationStore(
     (state) => state.setLastIdPerPage
   );
-
-  const checkSlugInFilters = ({
-    slug,
-    groupType,
-    productGroup,
-  }: {
-    slug: string;
-    groupType: "brands" | "categories";
-    productGroup: ProductCountGroup[];
-  }) => {
-    // Format slug to string
-    const formattedSlug = FormatSlugAsText(slug);
-
-    // check if the slug is present in the product group
-    const isPresentInGroup = productGroup.find(
-      (prod) => prod.name.toLowerCase() === formattedSlug.toLowerCase()
-    );
-
-    if (isPresentInGroup) {
-      const foundGroupName = isPresentInGroup.name;
-      if (groupType === "brands") {
-        const brandFilters: Set<string> = new Set(filters.brandList);
-        brandFilters.add(foundGroupName);
-        setFilters({ ...filters, brandList: Array.from(brandFilters) });
-      } else {
-        const categoryFilters: Set<string> = new Set(filters.categoryList);
-        categoryFilters.add(foundGroupName);
-        setFilters({ ...filters, categoryList: Array.from(categoryFilters) });
-      }
-    }
-  };
 
   const handleLastIdPerPage = (products?: sanityProduct[]) => {
     if (!products || products.length === 0) return;
@@ -105,30 +61,59 @@ const CollectionProducts = ({
         block: "start",
       });
     }
-    const { data: collectionProducts, error: fetchSanityProductsErr } =
-      await getAllSanityProductsByFilters({
-        category: slug,
-        subCategory: slug,
-        brand: slug,
-        pageNumber: currentPage,
-        pageSize: itemsPerPage,
-        lastId: lastId || undefined,
-      });
 
-    if (fetchSanityProductsErr) {
-      console.error("Error fetching products:", fetchSanityProductsErr);
-      return;
+    const payload = {
+      category: slug,
+      subCategory: slug,
+      brand: slug,
+      pageNumber: String(currentPage),
+      pageSize: String(itemsPerPage),
+      lastId: lastId || "",
+    };
+
+    const queryParams = new URLSearchParams(payload);
+
+    const uri = `${
+      process.env.NEXT_PUBLIC_SITE_URL
+    }/api/collections?${queryParams.toString()}`;
+
+    const { data, error } = await tryCatch(fetch(uri));
+
+    if (error) {
+      // console.log("Could not get response err: ", error.message);
+      notFound();
     }
-    if (!collectionProducts || collectionProducts.length === 0) {
-      console.warn("No products found for the current page.");
-      return;
+
+    if (!data.ok) {
+      // console.log("Could not get response err: ", data.statusText);
+      notFound();
     }
+
+    const { data: response, error: responseErr } = await tryCatch(
+      data.json() as Promise<collectionReqFetchResponse>
+    );
+
+    if (responseErr) {
+      // console.log("Could not get response err: ", responseErr.message);
+      notFound();
+    }
+
+    if (!response.success) {
+      // console.log("Could not get response err: ", response.message);
+      notFound();
+    }
+
+    const { collection, collectionCount } = response;
     setIsLoading(false);
-    setProducts(collectionProducts);
-    handleLastIdPerPage(collectionProducts);
+    setProducts(collection);
+    setProductCount(collectionCount);
+    handleLastIdPerPage(collection);
   };
 
-  const totalPages = Math.ceil((productCount || 0) / itemsPerPage);
+  const totalPages = useMemo(
+    () => Math.ceil((productCount || 0) / itemsPerPage),
+    [productCount, itemsPerPage]
+  );
 
   const handleRenderProducts = useCallback(() => {
     if (isLoading) {
@@ -165,37 +150,18 @@ const CollectionProducts = ({
   }, [isLoading, products]);
 
   useEffect(() => {
-    handleLastIdPerPage(products);
-    // Update the last ID for the current page when products change
-  }, [products, currentPage, setLastIdPerPage]);
-
-  useEffect(() => {
-    resetFilters();
-    if (currentPage === 1) {
-      setIsLoading(true);
-      setProducts(collectionProducts);
-      setIsLoading(false);
-    } else {
-      handleOnPageChange(currentPage);
-    }
-    setProductFallback(collectionProducts);
-    const { brands, categories } = getAssociatedGroupsWithProductCount(
-      currentPage === 1 ? collectionProducts : products
-    );
-    setBrandFilters(brands);
-    setCategoryFilters(categories);
-    checkSlugInFilters({ slug, groupType: "brands", productGroup: brands });
-    checkSlugInFilters({
-      slug,
-      groupType: "categories",
-      productGroup: categories,
-    });
-    // setCurrentPage(1);
-    setLastIdPerPage(
-      1,
-      collectionProducts[collectionProducts.length - 1]?.id || ""
-    );
-  }, [collectionProducts, setProducts, slug, currentPage]);
+    handleOnPageChange(currentPage);
+    setProductFallback(products);
+    setLastIdPerPage(1, products[products.length - 1]?.id || "");
+  }, [
+    setProducts,
+    slug,
+    currentPage,
+    handleOnPageChange,
+    products,
+    setLastIdPerPage,
+    setProductFallback,
+  ]);
 
   return (
     <section className="container flex flex-col justify-center items-center gap-8 mt-10 w-full">
