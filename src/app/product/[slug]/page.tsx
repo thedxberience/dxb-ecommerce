@@ -18,10 +18,10 @@ export async function generateStaticParams() {
 }
 
 type PageProps = {
-  params: { slug: string };
+  slug: string;
 };
 
-export default async function Page({ params }: PageProps) {
+export default async function Page(params: Promise<PageProps>) {
   const { slug } = await params;
 
   const { data: product, error } = await getSanityProductBySlug(slug);
