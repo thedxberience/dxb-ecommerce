@@ -16,7 +16,7 @@ type ProductDetailProps = {
 export async function ProductDetails({ product }: ProductDetailProps) {
   const { data: productVariants, error: productsVariantsErr } =
     await getAllSanityProductsByFilters({
-      parent: product.id,
+      parent: product.id
     });
 
   if (productsVariantsErr) {
@@ -81,8 +81,7 @@ export async function ProductDetails({ product }: ProductDetailProps) {
       {/* Delivery Info */}
       <div className="mt-8">
         <div className="mb-4 text-lg">Expected Delivery</div>
-        <div className="mb-2 text-sm">Standard: 4 to 7 working days</div>
-        <div className="mb-2 text-sm">Express: 2 to 3 working days</div>
+        <div className="mb-2 text-sm">Standard: 7 to 10 working days</div>
       </div>
 
       {/* Tabs */}
@@ -94,18 +93,18 @@ export async function ProductDetails({ product }: ProductDetailProps) {
             text: "Description",
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             data: <PortableText value={product.description as any} />,
-            id: "description",
+            id: "description"
           },
           {
             text: "Delivery",
             data: (
               <div>
                 Once an order is purchased, you will recieve it within{" "}
-                <span className="font-bold">4 to 8 working days.</span> If there
-                are any delays, you will be contacted by our team.
+                <span className="font-bold">7 to 10 working days.</span> If
+                there are any delays, you will be contacted by our team.
               </div>
             ),
-            id: "delivery",
+            id: "delivery"
           },
           {
             text: "Authenticity",
@@ -117,8 +116,8 @@ export async function ProductDetails({ product }: ProductDetailProps) {
                 retailers, and verified suppliers.
               </div>
             ),
-            id: "authenticity",
-          },
+            id: "authenticity"
+          }
         ]}
       />
     </div>
