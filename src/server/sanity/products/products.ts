@@ -40,16 +40,17 @@ function buildProductQuery(filters: SanityProductFilters) {
     lastIdConition = ` && _id > "${lastId}"`;
   } else {
     // If lastId is not provided, we will slice the results based on pageNumber and pageSize
-    sliceCondition = ` | order(_id)[${(pageNumber - 1) * pageSize}...${pageNumber * pageSize
-      }]`;
+    sliceCondition = ` | order(_id)[${(pageNumber - 1) * pageSize}...${
+      pageNumber * pageSize
+    }]`;
   }
 
   // Combine conditions with OR operator if there are any
   const filterClause =
     conditions.length > 0
       ? `[_type == "Product" && (${conditions.join(
-        " || "
-      )}) && defined(asset.image.asset->url)${lastIdConition}]`
+          " || "
+        )}) && defined(asset.image.asset->url)${lastIdConition}]`
       : `[_type == "Product" && defined(asset.image.asset->url)${lastIdConition}]`;
 
   // Construct and return the full query
@@ -86,8 +87,7 @@ export const getAllSanityProductsByFilterCount = async (
 
   // Only add conditions for filters that are defined
   if (category) conditions.push(`psuedoCategory == '${category}'`);
-  if (subCategory)
-    conditions.push(`psuedoSubCategory == '${subCategory}'`);
+  if (subCategory) conditions.push(`psuedoSubCategory == '${subCategory}'`);
   if (brand) conditions.push(`psuedoBrand == '${brand}'`);
   if (parent) conditions.push(`parent->name == '${parent}'`);
   if (slug) conditions.push(`slug.current == '${slug}'`);
@@ -138,8 +138,6 @@ export const getAllSanityProductsByFilters = async (
     };
   }
 
-
-
   return {
     data: products as sanityProduct[],
     error: null
@@ -158,14 +156,16 @@ export const filterSanityProducts = async ({
   const query = `*[_type == "Product" 
         ${price.min ? `&& price >= ${price.min}` : ""} 
         ${price.max ? `&& price <= ${price.max}` : ""} 
-        ${categoryList.length > 0
-      ? `&& category->name in ${JSON.stringify(categoryList)}`
-      : ""
-    }
-        ${brandList.length > 0
-      ? `&& brand->name in ${JSON.stringify(brandList)}`
-      : ""
-    }
+        ${
+          categoryList.length > 0
+            ? `&& category->name in ${JSON.stringify(categoryList)}`
+            : ""
+        }
+        ${
+          brandList.length > 0
+            ? `&& brand->name in ${JSON.stringify(brandList)}`
+            : ""
+        }
         && asset.image.asset->url != null
         ]
         {
@@ -370,8 +370,8 @@ export const getSanityProductsByParent = async (parent: string) => {
   };
 };
 
-export async function getAllProductSlugs() {
-  const query = `*[_type == "Product"]{
+export async function getAllProductSlugs(limit: number = 2000) {
+  const query = `*[_type == "Product"][0...${limit}]{
     "slug": slug.current,
   }`;
 

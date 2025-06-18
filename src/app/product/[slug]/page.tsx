@@ -13,7 +13,7 @@ import { ProductDetails } from "../components/ProductDetails";
 
 export const dynamic = "force-static";
 export async function generateStaticParams() {
-  const { data: slugs } = await getAllProductSlugs();
+  const { data: slugs } = await getAllProductSlugs(5000);
   return slugs?.map((slug) => ({ slug })) || [];
 }
 
