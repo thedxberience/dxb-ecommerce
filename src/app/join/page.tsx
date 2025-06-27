@@ -26,7 +26,7 @@ const page = () => {
         </div>
         <CustomButton
           isLink
-          href="https://chat.whatsapp.com/K30lEpyv7OWAbqK6bfxUBV"
+          href="https://chat.whatsapp.com/L5SqOuKc6PLJP99PoMZtem"
           btnName="Join Now"
         />
       </div>
