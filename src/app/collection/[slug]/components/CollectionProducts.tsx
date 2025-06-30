@@ -58,7 +58,7 @@ const CollectionProducts = ({ slug, currentPage }: CollectionProductsProps) => {
     if (productGrid.current) {
       productGrid.current.scrollIntoView({
         behavior: "smooth",
-        block: "start",
+        // block: "start",
       });
     }
 
